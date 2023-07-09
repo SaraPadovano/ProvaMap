@@ -44,7 +44,7 @@ public class Engine {
 
     public void execute() {
         System.out.println("================================");
-        System.out.println("* Adventure v. 0.3 - 2021-2022 *");
+        System.out.println("* Adventure v. 0.3 - 2021-2022 *"); //cambiare nome
         System.out.println("================================");
         System.out.println(game.getCurrentRoom().getName());
         System.out.println();
