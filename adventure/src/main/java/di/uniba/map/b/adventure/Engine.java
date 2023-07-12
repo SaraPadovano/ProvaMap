@@ -5,7 +5,7 @@
  */
 package di.uniba.map.b.adventure;
 
-import di.uniba.map.b.adventure.games.FireHouseGame;
+import di.uniba.map.b.adventure.games.EnchantedForest;
 import di.uniba.map.b.adventure.parser.Parser;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.type.CommandType;
