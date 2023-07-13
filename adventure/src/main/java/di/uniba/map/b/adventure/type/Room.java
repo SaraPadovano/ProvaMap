@@ -15,6 +15,8 @@ import java.util.List;
 public class Room {
 
     private final int id;
+    
+    private final int idMonster;
 
     private String name;
 
@@ -34,14 +36,13 @@ public class Room {
     
     private final List<AdvObject> objects=new ArrayList<>();
 
-    public Room(int id) {
-        this.id = id;
-    }
-
-    public Room(int id, String name, String description) {
+    public Room(int id, int idMonster, String name, String description) {
+        
         this.id = id;
         this.name = name;
         this.description = description;
+        this.idMonster = idMonster;
+        
     }
 
     public String getName() {
@@ -102,6 +103,10 @@ public class Room {
 
     public List<AdvObject> getObjects() {
         return objects;
+    }
+    
+    public int getIdMonster() {
+        return idMonster;
     }
 
     @Override

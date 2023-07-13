@@ -61,16 +61,13 @@ public class EnchantedForest extends GameDescription {
         Command open = new Command(CommandType.OPEN, "apri");
         open.setAlias(new String[]{});
         getCommands().add(open);
-        Command push = new Command(CommandType.PUSH, "premi");
-        push.setAlias(new String[]{"spingi", "attiva"});
-        getCommands().add(push);
         Command attack = new Command(CommandType.ATTACK, "attacca");
         attack.setAlias(new String[]{"colpisci", "uccidi", "ferisci", "distruggi"});
         getCommands().add(attack);
         Command give = new Command(CommandType.GIVE, "dare");
         give.setAlias(new String[]{"dai", "usa", "utilizza", "do", "lanciare", "lancia", "porgi", "porre"});
 //Rooms
-        Room entrataBosco = new Room(0, "Entrata bosco.", "Ti trovi all'entrata del bosco.\n"
+        Room entrataBosco = new Room(1, "Entrata bosco.", "Ti trovi all'entrata del bosco.\n"
                 + "Questo bosco era pieno di alberi e di altissime piante con delle bellissime e grandi foglie e fiori che emanavano un profumo così dolce"
                 + " e intenso e in sottofondo il rumore dell'acqua che scorreva.\nDavanti a te c'è un sentiero che si inoltra al suo interno e ti senti osservato.\n\n");
         entrataBosco.setLook("All'improvviso, uno strano personaggio appare tra i cespugli. Ha una lunga tunica grigia, un cappello a punta e un sorriso misterioso.\n"
@@ -78,7 +75,7 @@ public class EnchantedForest extends GameDescription {
                 + "\"Mio valoroso avventuriero, so che hai bisogno di una lama potente per affrontare le sfide che ti attendono per poter tornare a casa\", dice l'aiutante. "
                 + "\"Prendi questa spada, forgiata dall'acciaio di una stella caduta, e diventerai invincibile contro le forze oscure che minacciano il bosco.\""
                 + "\nL'aiutante ti porge la spada e scompare tra i cespugli. In cuor tuo speri di poterlo rivedere un giorno.\n\n");
-        Room topoMannaro = new Room(1, "Tana dei topi mannari.", "Hai intrapreso il sentiero, ma improvvisamente comincia a piovere molto forte.\n"
+        Room topoMannaro = new Room(2, "Tana dei topi mannari.", "Hai intrapreso il sentiero, ma improvvisamente comincia a piovere molto forte.\n"
                 + "Sei riuscito a stento a scorgere l'entrata di una caverna e ti ci sei fiondato dentro.\n"
                 + "Non è un posto molto accogliente, ma almeno è al riparo dalla pioggia.\n"
                 + "C'è un letto, un tavolo e una sedia. Sembra che qualcuno ci viva.\n"
@@ -90,12 +87,12 @@ public class EnchantedForest extends GameDescription {
                 + "Il topo mannaro si accorge della tua presenza e ti attacca. Non hai scelta, devi difenderti.\nCosa pensi di fare?\n\n");
 
 //la continueremo quando lui attacca in un altro punto.
-        Room biforcazioneBosco = new Room(2, "Biforcazione.", "Sei riuscito ad uscire dalla tana del topo mannaro, l'atmosfera rispetto all'inizio sembra essere completamente cambiata,"
+        Room biforcazioneBosco = new Room(3, "Biforcazione.", "Sei riuscito ad uscire dalla tana del topo mannaro, l'atmosfera rispetto all'inizio sembra essere completamente cambiata,"
                 + " è più cupa e ti da quasi un senso di inospitalità. Persino i fiori sembrano essere ostili.\n"
                 + "Dove vuoi andare?\n\n");
         biforcazioneBosco.setLook("Il sentiero si divide in tre. A ovest c'è un sentiero dove però la vegetazione si infittisce, a est c'è un sentiero in cui la foresta sembra"
                 + " più oscura e l'atmosfera diventa sempre più opprimente e a sud percepisci il rumore dell'acuqa provenire proprio da li.\n");
-        Room cumuloStrisciante = new Room(3, "Fitta vegetazione.", "Hai deciso di intraprendere il sentiero a ovest, ma la vegetazione è così fitta che non riesci a passare.\n"
+        Room cumuloStrisciante = new Room(4, "Fitta vegetazione.", "Hai deciso di intraprendere il sentiero a ovest, ma la vegetazione è così fitta che non riesci a passare.\n"
                 + "All'improvviso le radici degli alberi cominciano a muoversi e ti si attorcigliano alle caviglie, tentando di afferrarti."
                 + "Di fronte a te appare un cumulo di radici ed erbacce dal pessimo odore. Cerchi di liberarti tagliando le radici attorno le tue caviglie, ma è tutto inutile."
                 + "Continuano a rigenerarsi troppo velocemente!\n\n");
@@ -105,7 +102,7 @@ public class EnchantedForest extends GameDescription {
                 + "Si rivolge verso di te dicendo: \"Sono accorso percependo la tua disperazione! Sei proprio un caso perso. "
                 + "Oltre la spada non hai altro nell'inventario? Controlla!\"\n"
                 + "Così l'aiutante sparisce esattamente com'era comparso lasciandoti anche un pò imbarazzato.\n\n");
-        Room treant = new Room(4, "Cuore del bosco.", "Sei riuscito a liberarti dal cumulo strisciante e a proseguire il tuo cammino.\n"
+        Room treant = new Room(5, "Cuore del bosco.", "Sei riuscito a liberarti dal cumulo strisciante e a proseguire il tuo cammino.\n"
                 + "Il sentiero ti ha portato in una radura, dove c'è un albero enorme, così grande che non riesci a vedere la cima.\n"
                 + "L'albero ha un volto, è un treant! Ti guarda e sembra voglia dirti qualcosa...\n");
         treant.setLook("Ti avvicini all'albero. Finalmente riesci a comprendere le sue parole: \"Sono la divinità di questo bosco, "
@@ -119,33 +116,31 @@ public class EnchantedForest extends GameDescription {
                 + "tramite un apposito veleno... Sono disposto a tutto per ristabilire l'equilibrio del bosco! In ogni caso riusciresti a superare"
                 + "la Driade.\n Buona fortuna avventuriero... Rimarrò qui in attesa che tu faccia ritorno...\""
                 + "Prima di allontanarti il Treant ti dona una moneta, da qui a breve riuscirai a capire a cosa ti sarà utile...\n\n");
-        Room driade = new Room(5, "Driade.", "Hai deciso di proseguire il tuo cammino verso est, ma la foresta è sempre più oscura e l'atmosfera diventa sempre più opprimente.\n"
+        Room driade = new Room(6, "Driade.", "Hai deciso di proseguire il tuo cammino verso est, ma la foresta è sempre più oscura e l'atmosfera diventa sempre più opprimente.\n"
                 + "All'improvviso appare una figura femminile, è una Driade! Ti guarda con occhi ignettati di sangue e prima ancora che tu possa accorgerti della sua presenza"
                 + "si avventa su di te, per fortuna hai i riflessi pronti e riesci ad uscirne illeso, ma la furia della Driade non si placa così facilmente...\n\n");
         driade.setLook("Ti rendi conto che alcun attacco scalfisce la Driade, ma non abbastanza da farla desistere dal suo intento.\n"
                 + "A volte scappare è la migliore opzione...\n\n");
-        Room lago = new Room(6, "Lago.", "Hai deciso di proseguire il tuo cammino verso sud, ma il rumore dell'acqua è sempre più forte.\n"
+        Room lago = new Room(7, "Lago.", "Hai deciso di proseguire il tuo cammino verso sud, ma il rumore dell'acqua è sempre più forte.\n"
                 + "All'improvviso appare un lago, ma non è un lago qualsiasi, è un lago di sangue! Il lago è circondato da una nebbia rossastra e la sua superficie è completamente immobile.\n"
                 + "La nebbia si dirada e appare una mistica creatura, tanto elegante quanto spaventosa...\n"
                 + "Non riesci a muoverti per la paura, la sua presenza ti incute terrore, come riflesso inizi ad attaccarlo con ogni tuo mezzo... ma è tutto inutile!\n"
                 + "I colpi gli passano attraverso. Si avvicina sempre di più e senti che sussurra sempre una sola parola:\"Moneta!\"\n"
                 + "Sarà il caso di dargli questa moneta, che tanto desidera?\n\n");
-        lago.setLook("Non c'è nulla da osservare...\n\n");
-        Room biforcazioneLago = new Room(7, "Biforcazione", "Sei finalmente nel lago e sei circondato da una fitta vegetazione marina.\n"
+        Room biforcazioneLago = new Room(8, "Biforcazione", "Sei finalmente nel lago e sei circondato da una fitta vegetazione marina.\n"
                 + "Ti sembra tutto così strano anche grazie ai nuovi poteri che ti ha donato il fatale dell'acqua che ti consentono di respirare e muoverti.\n"
                 + "Esplorando sei arrivato ad una biforcazione...\n\n");
         biforcazioneLago.setLook("La biforcazione si divide in due. A est la vegetazione marina continua ed essere rigogliosa ma non ci sono più le piccole"
                 + "e adorate creaturine del lago che hai potuto ammirare in precedenza. Forse c'è qualcosa che non va, però sembra essere più rassicurante del sentiero ad ovest"
                 + "dove persino la vegetazione non si può più definire tale. Il sentiero ad est è forse più sicuro da esplorare?\n\n");
-        Room diavoloMarino = new Room(8, "Abissi", "Hai deciso di proseguire per il sentiero ad est.\n Ti ritrovi nelle profondità degli abissi del lago"
+        Room diavoloMarino = new Room(9, "Abissi", "Hai deciso di proseguire per il sentiero ad est.\n Ti ritrovi nelle profondità degli abissi del lago"
                 + "dove tutto ha iniziato a perdere colore. Nemmeno le creaturine marine sembra vogliano starci in un luogo così cupo.\n Continui ad esplorare sperando"
                 + "spinto dalla curiosità quando ad una certa intravedi una strana sagoma muoversi per i tronchi spogli del fondale del lago. Inizi a seguirlo, perchè i film horror non ti hanno mai insegnato niente"
                 + "quando all'improvviso la figura si volta inaspettatamente nella tua direzione. Probabilmente avrà percepito il tuo sguardo su di sè.\n"
                 + "Riesci così finalmente a scorgere meglio la sua figura. A primo impatto potrebbe essere scambiato tranquillamente per un serpente marino gigante ma in verità"
                 + "sembra più una lucertola umanoide. Ti fissa con dei profondi occhi gialli, unico colore in quell'oscurità. E ti fissa così intensamente che"
                 + "riesci a percepire il tuo essere preda. All'improvviso la creatura con uno scatto fulmineo si scaglia contro di te.\n Ti conviene iniziare ad impugnare un'arma per il combattimento.\n\n");
-        diavoloMarino.setLook("Non c'è nulla da osservare...\n\n");
-        Room merrow = new Room(9, "Calipso", "Proseguendo per il sentiero ad ovest continui ad inoltrarti negli abissi del lago.\n"
+        Room merrow = new Room(10, "Calipso", "Proseguendo per il sentiero ad ovest continui ad inoltrarti negli abissi del lago.\n"
                 + "Rispetto al sentiero ad est si percepisce fin da subito l'atmosfera cupa e tesa del luogo dove, nonostante i poteri concessi dal fatale dell'acqua"
                 + "respirare inizia ad essere veramente difficile.\n All'improvviso in quell'immenso deserto marino noti un cartello con inciso \"Abisso Calipso\".\n"
                 + "Il fatto che un abisso abbia un nome ti fa pensare che la creatura che ne risiede sia abbastana potente, ma al momento riesci solo a percepirne l'aura soffocante.\n"
@@ -160,13 +155,11 @@ public class EnchantedForest extends GameDescription {
         merrow.setLook("La creatura è molto potente. Con la sua coda da sirena riesce a muoversi velocemente e ti sferra attacchi inaspettati. Inoltre, il corpo è ricoperto da squame così dure"
                 + "che formano un'ottima difesa mentre ti attacca incessantemente con un arpione.\n Sei allo stremo e i tuoi attacchi non sembrano funzionare.\n Possibile che non ti ricordi cos'hai nell'inventario?\n"
                 + "Dovresti vedere un medico per mancanza di invettiva.\n\n");
-        Room tesoro = new Room(10, "Stanza del tesoro", "Sei riuscito finalmente a sconfiggere quella sirena uscita male e non con poche difficoltà.\n"
+        Room tesoro = new Room(11, "Stanza del tesoro", "Sei riuscito finalmente a sconfiggere quella sirena uscita male e non con poche difficoltà.\n"
                 + "Per fortuna le tue fatiche potrebbero essere ripagate visto che dietro al trono della creatura sembra esserci una porta finemente decorata. Potrebbe essere una trappola, ma la curiosità è troppo forte.\n"
-                + "Entri così in una stanza un po' spoglia rispetto al resto del castello però al suo interno, esplorando, trovi un forziere. Con un po' di ingegno riesci ad aprirlo e trovi con tus grande sorpresa la ghianda e"
-                + "una fiala di veleno. Ti vengono in mente le parole del Treant e capisci che è arrivato il momento di prendere una decisione. Però prima biosgna uscire dal lago.\n"
-                + "Sembra che i poteri concessi dal fatale stiano svanendo.\n\n");
-        tesoro.setLook("Non c'è nulla da osservare qui...Anche perchè si potrebbe rimanere accecati...\n\n");
-        Room underDark = new Room(11, "Under Dark", "Dopo aver superato finalmente la Driade, ti si prospetta davanti un portale immenso e oscuro.\n"
+                + "Entri così in una stanza.\n Al centro della stanza, si erge un grande piedistallo di corallo e perle, su cui riposa il tesoro più prezioso. Montagne di monete d'oro, gioielli scintillanti e reliquie antiche brillano in tutta la loro magnificenza." 
+                + "Le gemme e i diamanti riflettono la luce, creando riflessi sfavillanti che danzano sulle pareti.\n\n");
+        Room underDark = new Room(12, "Under Dark", "Dopo aver superato finalmente la Driade, ti si prospetta davanti un portale immenso e oscuro.\n"
                 + "Speri che ti possa ricondurre a casa ma ne dubiti vista l'atmosfera agghiacciante che lo circonda. A dar conferma ai yuoi pensieri compare all'improvviso"
                 + "il \"tuo aiutante\" che ti dice:\"Congratulazioni avventuriero, sei risucito ad arrivare al boss finale di questo mondo. Se riuscirai a sconfiggerlo potrai finalmente tornare a casa.\n+"
                 + "Ma attenzione! Questo è un nemico molto potente, più di tutti quelli che hai dovuto affrontare finora.\n Spero tu possa farcela. In ogni caso io ti saluto, è stato bello aiutarti nel tuo viaggio in questo mondo\""
@@ -185,41 +178,57 @@ public class EnchantedForest extends GameDescription {
                 + "Nell'Under Dark regna un silenzio tombale, si sente solo il rieccheggiare di alcune gocce d'acqua che hanno l'audacia di cadere sul freddo e inospitale suolo.\n"
                 + "Di cos'altro si nasconda in questo mondo sotterraneo tetro e silenzioso nessuno lo sa, o meglio nessuno è tornato abbastanza sano o vivo per raccontarlo...\n\n");
 //map
-        kitchen.setEast(livingRoom);
-        livingRoom.setNorth(hall);
-        livingRoom.setWest(kitchen);
-        hall.setSouth(livingRoom);
-        hall.setWest(yourRoom);
-        hall.setNorth(bathroom);
-        bathroom.setSouth(hall);
-        yourRoom.setEast(hall);
-        getRooms().add(kitchen);
-        getRooms().add(livingRoom);
-        getRooms().add(hall);
-        getRooms().add(bathroom);
-        getRooms().add(yourRoom);
+        entrataBosco.setNorth(topoMannaro);
+        topoMannaro.setNorth(biforcazioneBosco);
+        biforcazioneBosco.setEast(cumuloStrisciante);
+        cumuloStrisciante.setEast(treant);
+        biforcazioneBosco.setWest(driade);
+        driade.setWest(underDark);
+        biforcazioneBosco.setNorth(lago);
+        lago.setNorth(biforcazioneLago);
+        biforcazioneLago.setEast(diavoloMarino);
+        lago.setWest(merrow);
+        merrow.setWest(tesoro);
+        getRooms().add(entrataBosco);
+        getRooms().add(topoMannaro);
+        getRooms().add(biforcazioneBosco);
+        getRooms().add(cumuloStrisciante);
+        getRooms().add(treant);
+        getRooms().add(driade);
+        getRooms().add(underDark);
+        getRooms().add(lago);
+        getRooms().add(biforcazioneLago);
+        getRooms().add(diavoloMarino);
+        getRooms().add(merrow);
+        getRooms().add(tesoro);
 //obejcts
-        AdvObject battery = new AdvObject(1, "batteria", "Un pacco di batterie, chissà se sono cariche.");
-        battery.setAlias(new String[]{"batterie", "pile", "pila"});
-        bathroom.getObjects().add(battery);
-        AdvObjectContainer wardrobe = new AdvObjectContainer(2, "armadio", "Un semplice armadio.");
-        wardrobe.setAlias(new String[]{"guardaroba", "vestiario"});
-        wardrobe.setOpenable(true);
-        wardrobe.setPickupable(false);
-        wardrobe.setOpen(false);
-        yourRoom.getObjects().add(wardrobe);
-        AdvObject toy = new AdvObject(3, "giocattolo", "Il gioco che ti ha regalato zia Lina.");
-        toy.setAlias(new String[]{"gioco", "robot"});
-        toy.setPushable(true);
-        toy.setPush(false);
-        wardrobe.add(toy);
-        AdvObject kkey = new AdvObject(4, "chiave", "Usa semplice chiave come tante altre.");
-        toy.setAlias(new String[]{"key"});
-        toy.setPushable(false);
-        toy.setPush(false);
-        kitchen.getObjects().add(kkey);
+        AdvObject sword = new AdvObject(1, "spada", "La spada donata dall'aiutante era un'opera d'arte incredibile, che incantava chiunque posasse gli occhi su di essa. Lunga e affilata, emanava un'aura di potere e maestosità."
+                + "La lama era realizzata in acciaio lucido e rifinita con cura, riflettendo la luce con una brillantezza accecante. La sua forma sinuosa era adornata da motivi intricati e intagli dettagliati lungo tutto il filo, raffiguranti simboli misteriosi e immagini leggendarie.");
+        sword.setAlias(new String[]{"spadone", "lama", "arma"});
+        entrataBosco.getObjects().add(sword);
+        AdvObjectContainer chest = new AdvObjectContainer(5, "forziere", "Il forziere divino nascondeva al suo interno segreti e tesori sconosciuti, doni degli dei e legami con il mondo della natura. Si diceva che solo coloro che avessero dimostrato una connessione profonda con il mare e una purezza d'animo avrebbero potuto aprirlo e accedere ai suoi tesori.");
+        chest.setAlias(new String[]{"scrigno", "tesoro"});
+        chest.setOpenable(true);
+        chest.setPickupable(false);
+        chest.setOpen(false);
+        tesoro.getObjects().add(chest);
+        AdvObject poison = new AdvObject(2, "fiala di veleno", "La fiala di veleno per uccidere un'antica creatura era un oggetto oscuro e inquietante, carico di un potere mortale. La sua piccola e delicata forma contenitore nascondeva un liquido nero come l'ebano, denso e viscoso." 
+                + "Le pareti di vetro erano intarsiate con simboli sinistri, tracciati con precisione e dettaglio.");
+        poison.setAlias(new String[]{"veleno"});
+        chest.add(poison);
+        AdvObject acorn = new AdvObject(3, "ghianda", "La ghianda antica e mistica appartenente all'antica creatura era un tesoro prezioso e straordinario, che portava con sé una profonda connessione con il potere primordiale della natura. La sua forma era delicata e armoniosa, come se fosse stata scolpita con cura da una mano divina.");
+        acorn.setAlias(new String[]{"ghianda"});
+        chest.add(acorn);
+        AdvObject fire = new AdvObject(4, "fiala del fuoco", "La fiala antica era molto più di un semplice contenitore. Rappresentava un canale per l'energia primordiale del fuoco, un dono delle divinità o degli antichi maestri che avrebbero saputo manipolarlo con cautela e rispetto." 
+                + "Era un oggetto riservato a coloro che avevano la conoscenza e il coraggio di maneggiare l'essenza del fuoco, pronti ad utilizzarla per scopi nobili o distruttivi.");
+        fire.setAlias(new String[]{"fuoco", "fiamma", "fiala di fiamme"});
+        topoMannaro.getObjects().add(fire);
+        AdvObject thunder = new AdvObject(5, "fiala del fulmine", "La fiala antica non era solo un semplice contenitore, ma un conduttore dell'essenza del fulmine stessa." 
+                + "Chiunque la possedesse avrebbe potuto canalizzare l'energia elettrica e utilizzarla per scopi creativi o distruttivi. Era un oggetto riservato a coloro che avevano la conoscenza e il coraggio di manipolare l'essenza del fulmine, pronti ad affrontare le sfide e i pericoli che essa comportava.");
+        thunder.setAlias(new String[]{"fulmine", "fulmini", "fiala di fulmini", "saette"});
+        topoMannaro.getObjects().add(thunder);      
 //set starting room
-        setCurrentRoom(hall);
+        setCurrentRoom(entrataBosco);
     }
 
     @Override
@@ -339,22 +348,7 @@ public class EnchantedForest extends GameDescription {
                         }
                     }
                 }
-            } else if (p.getCommand().getType() == CommandType.PUSH) {
-//ricerca oggetti pushabili
-                if (p.getObject() != null && p.getObject().isPushable()) {
-                    out.println("Hai premuto: " + p.getObject().getName());
-                    if (p.getObject().getId() == 3) {
-                        end(out);
-                    }
-                } else if (p.getInvObject() != null && p.getInvObject().isPushable()) {
-                    out.println("Hai premuto: " + p.getInvObject().getName());
-                    if (p.getInvObject().getId() == 3) {
-                        end(out);
-                    }
-                } else {
-                    out.println("Non ci sono oggetti che puoi premere qui.");
-                }
-            }
+            } 
             if (noroom) {
                 out.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
             } else if (move) {
@@ -366,7 +360,7 @@ public class EnchantedForest extends GameDescription {
     }
 
     private void end(PrintStream out) {
-        out.println("Premi il pulsante del giocattolo e in seguito ad una forte esplosione la tua casa prende fuoco...\ntu e tuoi famigliari cercate invano di salvarvi e venite avvolti dalle fiamme...\nè stata una morte CALOROSA...addio!");
+        out.println("final"); //fare due casi
         System.exit(0);
     }
 }
