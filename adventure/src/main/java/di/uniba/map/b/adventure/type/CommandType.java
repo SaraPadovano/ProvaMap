@@ -10,5 +10,5 @@ package di.uniba.map.b.adventure.type;
  * @author pierpaolo
  */
 public enum CommandType {
-    END, INVENTORY, NORD, SOUTH, EAST, WEST, OPEN, CLOSE, PULL, PICK_UP, GIVE, USE, LOOK_AT, ATTACK
+    END, INVENTORY, NORD, SOUTH, EAST, WEST, OPEN, CLOSE, PULL, PICK_UP, GIVE, USE, LOOK_AT, ATTACK, MONSTER
 }

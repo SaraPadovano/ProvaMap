@@ -16,7 +16,7 @@ public class Room {
 
     private final int id;
     
-    private final int idMonster;
+    private final Monster monster;
 
     private String name;
 
@@ -36,12 +36,12 @@ public class Room {
     
     private final List<AdvObject> objects=new ArrayList<>();
 
-    public Room(int id, int idMonster, String name, String description) {
+    public Room(int id, Monster monster, String name, String description) {
         
         this.id = id;
         this.name = name;
         this.description = description;
-        this.idMonster = idMonster;
+        this.monster = monster;
         
     }
 
@@ -105,8 +105,8 @@ public class Room {
         return objects;
     }
     
-    public int getIdMonster() {
-        return idMonster;
+    public Monster getMonster() {
+        return monster;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Monster {
 
     private final int idDrop;
 
-    public Monster(int id, String name, String descr, int idDrop) {
+    public Monster(int id, int idDrop, String name, String descr) {
         
         this.id = id;
         this.name = name;
