@@ -4,6 +4,7 @@
  */
 package di.uniba.map.b.adventure.type;
 
+
 /**
  *
  * @author 39388
@@ -20,14 +21,14 @@ public class Monster {
 
     private boolean dropSomething = false;
 
-    private final int idDrop;
+    private AdvObject dropObject;
 
-    public Monster(int id, int idDrop, String name, String descr) {
+    public Monster(int id, AdvObject dropObject, String name, String descr) {
         
         this.id = id;
         this.name = name;
         this.descr = descr;
-        this.idDrop = idDrop;
+        this.dropObject = dropObject;
         
     }
 
@@ -69,9 +70,9 @@ public class Monster {
     
     }
     
-    public int getIdDrop() {
+    public AdvObject getDropObject() {
     
-        return idDrop;
+        return dropObject;
     
     }
     
