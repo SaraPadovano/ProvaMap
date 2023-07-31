@@ -11,6 +11,7 @@ import di.uniba.map.b.adventure.type.AdvObject;
 import di.uniba.map.b.adventure.type.AdvObjectContainer;
 import di.uniba.map.b.adventure.type.Command;
 import di.uniba.map.b.adventure.type.CommandType;
+import di.uniba.map.b.adventure.type.Inventory;
 import di.uniba.map.b.adventure.type.Monster;
 import di.uniba.map.b.adventure.type.Room;
 import java.io.PrintStream;
@@ -252,15 +253,25 @@ public class EnchantedForest extends GameDescription {
 //map
         entrataBosco.setNorth(tanaTopoMannaro);
         tanaTopoMannaro.setNorth(biforcazioneBosco);
+        tanaTopoMannaro.setSouth(entrataBosco);
         biforcazioneBosco.setEast(fittaVegetazione);
+        biforcazioneBosco.setSouth(tanaTopoMannaro);
         fittaVegetazione.setEast(cuoreBosco);
+        fittaVegetazione.setWest(biforcazioneBosco);
         biforcazioneBosco.setWest(alfheim);
         alfheim.setWest(underDark);
+        alfheim.setEast(biforcazioneBosco);
         biforcazioneBosco.setNorth(lago);
+        cuoreBosco.setWest(fittaVegetazione);
         lago.setNorth(biforcazioneLago);
+        lago.setSouth(biforcazioneBosco);
         biforcazioneLago.setEast(abissi);
+        abissi.setWest(biforcazioneLago);
+        biforcazioneLago.setSouth(lago);
         lago.setWest(calipso);
+        calipso.setEast(lago);
         calipso.setWest(tesoro);
+        tesoro.setEast(calipso);
         getRooms().add(entrataBosco);
         getRooms().add(tanaTopoMannaro);
         getRooms().add(biforcazioneBosco);
@@ -322,6 +333,9 @@ public class EnchantedForest extends GameDescription {
             } else if (p.getCommand().getType() == CommandType.LOOK_AT) {
                 if (getCurrentRoom().getLook() != null) {
                     out.println(getCurrentRoom().getLook());
+                    if (getCurrentRoom().getName().equals("Cuore del bosco")) {
+                        getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                    }
                 } else {
                     out.println("Non c'è niente di interessante qui.");
                 }
@@ -353,6 +367,61 @@ public class EnchantedForest extends GameDescription {
                     }
                 } else {
                     out.println("Non c'è niente da attaccare in questo posto... a parte te stesso!");
+                }
+            } else if (p.getCommand().getType() == CommandType.USE) {
+                if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                    Iterator<AdvObject> it = getInventory().iterator();
+                    boolean findPoison = false;
+                    boolean findThunder = false;
+                    while (it.hasNext()) {
+                        AdvObject next = it.next();
+                        if (next.getName().equals("fiala di veleno")) {
+                            findPoison = true;
+                        }
+                        if (next.getName().equals("fiala del fulmine")) {
+                            findThunder = true;
+                        }
+                    }
+                    if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
+                        out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
+                        getCurrentRoom().getMonster().setAlive(false);
+                        setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
+                        getCurrentRoom().getMonster().setAlive(false);
+                        out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
+                    }
+                    if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
+                        out.println("Congratulazioni, hai ucciso il Merrow!");
+                        getCurrentRoom().getMonster().setAlive(false);
+                    }
+                    if (getCurrentRoom().getMonster().getId() == 2) {
+                        out.println("Congratulazioni, hai ucciso il cumulo strisciante!");
+                        getCurrentRoom().getMonster().setAlive(false);
+                    }
+                }
+            } else if (p.getCommand().getType() == CommandType.GIVE) {
+                if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                    Iterator<AdvObject> it = getInventory().iterator();
+                    boolean findCoin = false;
+                    boolean findAcorn = false;
+                    while (it.hasNext()) {
+                        AdvObject next = it.next();
+                        if (next.getName().equals("ghianda")) {
+                            findAcorn = true;
+                        }
+                        if (next.getName().equals("moneta")) {
+                            findCoin = true;
+                        }
+                    }
+                    if (getCurrentRoom().getMonster().getId() == 3 && findAcorn == true) {
+                        out.println("Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
+                        setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
+                        getCurrentRoom().getMonster().setAlive(false);
+                        out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
+                    }
+                    if (getCurrentRoom().getMonster().getId() == 5 && findCoin == true) {
+                        getCurrentRoom().getMonster().setAlive(false);
+                        out.println("Davanti a te si apre un portale per i abissi del lago.");
+                    }
                 }
             } else if (p.getCommand().getType() == CommandType.OPEN) {
                 /*ATTENZIONE: quando un oggetto contenitore viene aperto, tutti gli oggetti contenuti
