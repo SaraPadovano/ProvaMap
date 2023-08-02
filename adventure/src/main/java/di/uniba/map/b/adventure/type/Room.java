@@ -15,7 +15,7 @@ import java.util.List;
 public class Room {
 
     private final int id;
-    
+
     private final Monster monster;
 
     private String name;
@@ -33,16 +33,16 @@ public class Room {
     private Room east = null;
 
     private Room west = null;
-    
-    private final List<AdvObject> objects=new ArrayList<>();
+
+    private final List<AdvObject> objects = new ArrayList<>();
 
     public Room(int id, Monster monster, String name, String description) {
-        
+
         this.id = id;
         this.name = name;
         this.description = description;
         this.monster = monster;
-        
+
     }
 
     public String getName() {
@@ -54,7 +54,16 @@ public class Room {
     }
 
     public String getDescription() {
-        return description;
+        if (monster != null) {
+            if (monster.getIsAlive() == true) {
+                return description;
+            } else {
+                String p = "Sei già passato di qua.";
+                return p;
+            }
+        } else {
+            return description;
+        }
     }
 
     public void setDescription(String description) {
@@ -104,7 +113,7 @@ public class Room {
     public List<AdvObject> getObjects() {
         return objects;
     }
-    
+
     public Monster getMonster() {
         return monster;
     }

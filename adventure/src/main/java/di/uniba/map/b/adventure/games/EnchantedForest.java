@@ -11,7 +11,6 @@ import di.uniba.map.b.adventure.type.AdvObject;
 import di.uniba.map.b.adventure.type.AdvObjectContainer;
 import di.uniba.map.b.adventure.type.Command;
 import di.uniba.map.b.adventure.type.CommandType;
-import di.uniba.map.b.adventure.type.Inventory;
 import di.uniba.map.b.adventure.type.Monster;
 import di.uniba.map.b.adventure.type.Room;
 import java.io.PrintStream;
@@ -32,6 +31,8 @@ import java.util.Iterator;
  * @author pierpaolo
  */
 public class EnchantedForest extends GameDescription {
+    
+    private boolean looked = false;
 
     @Override
     public void init() throws Exception {
@@ -66,12 +67,15 @@ public class EnchantedForest extends GameDescription {
         Command attack = new Command(CommandType.ATTACK, "attacca");
         attack.setAlias(new String[]{"colpisci", "uccidi", "ferisci", "distruggi"});
         getCommands().add(attack);
-        Command give = new Command(CommandType.GIVE, "dare");
-        give.setAlias(new String[]{"dai", "do", "porgi", "porre"});
+        Command give = new Command(CommandType.GIVE, "dai");
+        give.setAlias(new String[]{"dare", "do", "porgi", "porre"});
+        getCommands().add(give);
         Command monster = new Command(CommandType.MONSTER, "mostro");
         monster.setAlias(new String[]{"creatura", "osserva mostro", "osserva creatura"}); //da provare se funzionano gli alias
+        getCommands().add(monster);
         Command use = new Command(CommandType.USE, "usa");
         use.setAlias(new String[]{"utilizza", "lancia", "butta", "getta"});
+        getCommands().add(use);
 
         //obejcts
         AdvObject sword = new AdvObject(1, "spada", "La spada donata dall'aiutante era un'opera d'arte incredibile, che incantava chiunque posasse gli occhi su di essa. Lunga e affilata, emanava un'aura di potere e maestosità."
@@ -268,8 +272,8 @@ public class EnchantedForest extends GameDescription {
         biforcazioneLago.setEast(abissi);
         abissi.setWest(biforcazioneLago);
         biforcazioneLago.setSouth(lago);
-        lago.setWest(calipso);
-        calipso.setEast(lago);
+        biforcazioneLago.setWest(calipso);
+        calipso.setEast(biforcazioneLago);
         calipso.setWest(tesoro);
         tesoro.setEast(calipso);
         getRooms().add(entrataBosco);
@@ -333,8 +337,11 @@ public class EnchantedForest extends GameDescription {
             } else if (p.getCommand().getType() == CommandType.LOOK_AT) {
                 if (getCurrentRoom().getLook() != null) {
                     out.println(getCurrentRoom().getLook());
-                    if (getCurrentRoom().getName().equals("Cuore del bosco")) {
-                        getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                    if (getCurrentRoom().getName().equals("Cuore del bosco.")) {
+                       if (looked != true) {
+                           getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                           looked = true;
+                       }
                     }
                 } else {
                     out.println("Non c'è niente di interessante qui.");
@@ -370,6 +377,7 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.USE) {
                 if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                    out.println("CIAONE");
                     Iterator<AdvObject> it = getInventory().iterator();
                     boolean findPoison = false;
                     boolean findThunder = false;
@@ -400,6 +408,7 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.GIVE) {
                 if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                    out.println("CIAONE");
                     Iterator<AdvObject> it = getInventory().iterator();
                     boolean findCoin = false;
                     boolean findAcorn = false;
