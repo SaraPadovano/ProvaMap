@@ -31,7 +31,7 @@ import java.util.Iterator;
  * @author pierpaolo
  */
 public class EnchantedForest extends GameDescription {
-    
+
     private boolean looked = false;
 
     @Override
@@ -67,8 +67,8 @@ public class EnchantedForest extends GameDescription {
         Command attack = new Command(CommandType.ATTACK, "attacca");
         attack.setAlias(new String[]{"colpisci", "uccidi", "ferisci", "distruggi"});
         getCommands().add(attack);
-        Command give = new Command(CommandType.GIVE, "dai");
-        give.setAlias(new String[]{"dare", "do", "porgi", "porre"});
+        Command give = new Command(CommandType.GIVE, "dare");
+        give.setAlias(new String[]{"porgi", "porre", "do", "lancia"});
         getCommands().add(give);
         Command monster = new Command(CommandType.MONSTER, "mostro");
         monster.setAlias(new String[]{"creatura", "osserva mostro", "osserva creatura"}); //da provare se funzionano gli alias
@@ -87,13 +87,15 @@ public class EnchantedForest extends GameDescription {
         chest.setOpenable(true);
         chest.setPickupable(false);
         chest.setOpen(false);
-        AdvObject poison = new AdvObject(2, "fiala di veleno", "La fiala di veleno per uccidere un'antica creatura era un oggetto oscuro e inquietante, carico di un potere mortale. La sua piccola e delicata forma contenitore nascondeva un liquido nero come l'ebano, denso e viscoso."
+        AdvObject poison = new AdvObject(2, "veleno", "La fiala di veleno per uccidere un'antica creatura era un oggetto oscuro e inquietante, carico di un potere mortale. La sua piccola e delicata forma contenitore nascondeva un liquido nero come l'ebano, denso e viscoso."
                 + "Le pareti di vetro erano intarsiate con simboli sinistri, tracciati con precisione e dettaglio.");
-        poison.setAlias(new String[]{"veleno"});
+        poison.setAlias(new String[]{"fiala di veleno", "veleno mortale"});
         chest.add(poison);
+        poison.setPickupable(true);
         AdvObject acorn = new AdvObject(3, "ghianda", "La ghianda antica e mistica appartenente all'antica creatura era un tesoro prezioso e straordinario, che portava con sé una profonda connessione con il potere primordiale della natura. La sua forma era delicata e armoniosa, come se fosse stata scolpita con cura da una mano divina.");
-        acorn.setAlias(new String[]{"ghianda"});
+        acorn.setAlias(new String[]{"ghiandosa"});
         chest.add(acorn);
+        acorn.setPickupable(true);
         AdvObject fire = new AdvObject(4, "fiala del fuoco", "La fiala antica era molto più di un semplice contenitore. Rappresentava un canale per l'energia primordiale del fuoco, un dono delle divinità o degli antichi maestri che avrebbero saputo manipolarlo con cautela e rispetto."
                 + "Era un oggetto riservato a coloro che avevano la conoscenza e il coraggio di maneggiare l'essenza del fuoco, pronti ad utilizzarla per scopi nobili o distruttivi.");
         fire.setAlias(new String[]{"fuoco", "fiamma", "fiala di fiamme"});
@@ -338,10 +340,10 @@ public class EnchantedForest extends GameDescription {
                 if (getCurrentRoom().getLook() != null) {
                     out.println(getCurrentRoom().getLook());
                     if (getCurrentRoom().getName().equals("Cuore del bosco.")) {
-                       if (looked != true) {
-                           getInventory().add(getCurrentRoom().getMonster().getDropObject());
-                           looked = true;
-                       }
+                        if (looked != true) {
+                            getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                            looked = true;
+                        }
                     }
                 } else {
                     out.println("Non c'è niente di interessante qui.");
@@ -363,73 +365,146 @@ public class EnchantedForest extends GameDescription {
                     out.println("Non c'è niente da raccogliere qui.");
                 }
             } else if (p.getCommand().getType() == CommandType.ATTACK) {
-                if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
-                    if (getCurrentRoom().getMonster().getId() == 1 || getCurrentRoom().getMonster().getId() == 6) {
-                        out.println("Congratulazioni hai sconfitto il mostro!!! Non sei così incapace come pensavo!");
-                        getCurrentRoom().getMonster().setAlive(false);
-                        getInventory().add(getCurrentRoom().getMonster().getDropObject());
-                        out.println("Hai conquistato un nuovo oggetto che ti potrà aiutare a sconfiggere i futuri mostri!");
+                try {
+                    if (p.getInvObject().getName().equals("spada")) {
+                        if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                            if (getCurrentRoom().getMonster().getId() == 1 || getCurrentRoom().getMonster().getId() == 6) {
+                                out.println("Congratulazioni hai sconfitto il mostro!!! Non sei così incapace come pensavo!");
+                                getCurrentRoom().getMonster().setAlive(false);
+                                getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                                out.println("Hai conquistato un nuovo oggetto che ti potrà aiutare a sconfiggere i futuri mostri!");
+                            } else {
+                                out.println("La spada non è efficace in questo caso. Riprova!");
+                            }
+                        } else {
+                            out.println("Non c'è niente da attaccare in questo posto... a parte te stesso!");
+                        }
                     } else {
-                        out.println("La spada non è efficace in questo caso. Riprova!");
+                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
                     }
-                } else {
-                    out.println("Non c'è niente da attaccare in questo posto... a parte te stesso!");
+                } catch (Exception NullPointerException) {
+                    if (p.getInvObject() == null) {
+                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
+                    }
                 }
             } else if (p.getCommand().getType() == CommandType.USE) {
-                if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
-                    out.println("CIAONE");
-                    Iterator<AdvObject> it = getInventory().iterator();
-                    boolean findPoison = false;
-                    boolean findThunder = false;
-                    while (it.hasNext()) {
-                        AdvObject next = it.next();
-                        if (next.getName().equals("fiala di veleno")) {
-                            findPoison = true;
+                try {
+                    if (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("veleno")) {
+                        if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+                            Iterator<AdvObject> it = getInventory().iterator();
+                            boolean findPoison = false;
+                            boolean findThunder = false;
+                            while (it.hasNext()) {
+                                AdvObject next = it.next();
+                                if (next.getName().equals("veleno")) {
+                                    out.println("veleno");
+                                    findPoison = true;
+                                }
+                                if (next.getName().equals("fiala del fulmine")) {
+                                    findThunder = true;
+                                }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
+                                out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
+                                getCurrentRoom().getMonster().setAlive(false);
+                                setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
+                                getCurrentRoom().getMonster().setAlive(false);
+                                out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
+                                Iterator<AdvObject> re = getInventory().iterator();
+
+                                while (re.hasNext()) {
+                                    AdvObject next = re.next();
+                                    if (next.getName().equals("veleno")) {
+                                        getInventory().remove(next);
+                                    }
+
+                                }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
+                                out.println("Congratulazioni, hai ucciso il Merrow!");
+                                getCurrentRoom().getMonster().setAlive(false);
+                                Iterator<AdvObject> re = getInventory().iterator();
+
+                                while (re.hasNext()) {
+                                    AdvObject next = re.next();
+                                    if (next.getName().equals("fiala del fulmine")) {
+                                        getInventory().remove(next);
+                                    }
+
+                                }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 2) {
+                                out.println("Congratulazioni, hai ucciso il cumulo strisciante!");
+                                getCurrentRoom().getMonster().setAlive(false);
+                                Iterator<AdvObject> re = getInventory().iterator();
+
+                                while (re.hasNext()) {
+                                    AdvObject next = re.next();
+                                    if (next.getName().equals("fiala del fuoco")) {
+                                        getInventory().remove(next);
+                                    }
+
+                                }
+                            }
                         }
-                        if (next.getName().equals("fiala del fulmine")) {
-                            findThunder = true;
-                        }
+                    } else {
+                        out.println("Non puoi usare questo oggetto!");
                     }
-                    if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
-                        out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
-                        getCurrentRoom().getMonster().setAlive(false);
-                        setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
-                        getCurrentRoom().getMonster().setAlive(false);
-                        out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
-                    }
-                    if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
-                        out.println("Congratulazioni, hai ucciso il Merrow!");
-                        getCurrentRoom().getMonster().setAlive(false);
-                    }
-                    if (getCurrentRoom().getMonster().getId() == 2) {
-                        out.println("Congratulazioni, hai ucciso il cumulo strisciante!");
-                        getCurrentRoom().getMonster().setAlive(false);
+                } catch (Exception NullPointerException) {
+                    if (p.getInvObject() == null) {
+                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
                     }
                 }
             } else if (p.getCommand().getType() == CommandType.GIVE) {
-                if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
-                    out.println("CIAONE");
-                    Iterator<AdvObject> it = getInventory().iterator();
-                    boolean findCoin = false;
-                    boolean findAcorn = false;
-                    while (it.hasNext()) {
-                        AdvObject next = it.next();
-                        if (next.getName().equals("ghianda")) {
-                            findAcorn = true;
-                        }
-                        if (next.getName().equals("moneta")) {
-                            findCoin = true;
+                try {
+                    if (p.getInvObject().getName().equals("moneta") || p.getInvObject().getName().equals("ghianda")) {
+                        if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
+
+                            Iterator<AdvObject> it = getInventory().iterator();
+                            boolean findCoin = false;
+                            boolean findAcorn = false;
+                            while (it.hasNext()) {
+                                AdvObject next = it.next();
+                                if (next.getName().equals("ghianda")) {
+                                    findAcorn = true;
+                                }
+                                if (next.getName().equals("moneta")) {
+                                    findCoin = true;
+                                }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 3 && findAcorn == true) {
+                                out.println("Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
+                                setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
+                                getCurrentRoom().getMonster().setAlive(false);
+                                out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
+                                Iterator<AdvObject> re = getInventory().iterator();
+
+                                while (re.hasNext()) {
+                                    AdvObject next = re.next();
+                                    if (next.getName().equals("ghianda")) {
+                                        getInventory().remove(next);
+                                    }
+
+                                }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 5 && findCoin == true) {
+                                getCurrentRoom().getMonster().setAlive(false);
+                                out.println("Davanti a te si apre un portale per gli abissi del lago.");
+                                Iterator<AdvObject> re = getInventory().iterator();
+
+                                while (re.hasNext()) {
+                                    AdvObject next = re.next();
+                                    if (next.getName().equals("moneta")) {
+                                        getInventory().remove(next);
+                                    }
+
+                                }
+                            }
                         }
                     }
-                    if (getCurrentRoom().getMonster().getId() == 3 && findAcorn == true) {
-                        out.println("Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
-                        setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
-                        getCurrentRoom().getMonster().setAlive(false);
-                        out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
-                    }
-                    if (getCurrentRoom().getMonster().getId() == 5 && findCoin == true) {
-                        getCurrentRoom().getMonster().setAlive(false);
-                        out.println("Davanti a te si apre un portale per i abissi del lago.");
+                } catch (Exception NullPointerException) {
+                    if (p.getInvObject() == null) {
+                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
                     }
                 }
             } else if (p.getCommand().getType() == CommandType.OPEN) {
