@@ -106,6 +106,9 @@ public class EnchantedForest extends GameDescription {
                 + "Essa infatti non ha inciso alcun prezzo di riferimento ma è finemente decorata da entrambi i lati con decorazioni che richiamano paesaggi marini da un lato e boschivi dall'altro.");
         coin.setOpenable(false);
         coin.setPickupable(false);
+        AdvObject radio = new AdvObject(7, "radio", "Quest'oggetto presenta le stesse caratteristiche di una radiolina, ma non sembrano esserci stazioni attive nella zona."
+                + "Ha una forma piccola, che la rende tascabile. E' forse l'oggetto più adorabile che tu abbia mai visto. La sua utilità è ancora sconosciuta.");
+        radio.setAlias(new String[]{"radiolina"});
 //Monster
         Monster topoMannaro = new Monster(1, fire, "Topo Mannaro", "I topi mannari sono scaltri licantropi dall'indole avida e subdola. In forma umana sono snelli e nervosi, hanno i capelli radi e gli occhi sfuggenti.\n"
                 + "Solitamente usano armi leggere e prediligono le imboscate piuttosto che muoversi in branco. Usa la sua forza principalmente per muoversi furtivamente e per scappare.\nI topi mannari, in forma ibrida o umanoide,"
@@ -131,7 +134,7 @@ public class EnchantedForest extends GameDescription {
                 + "massacrano le ciurme delle navi e decimano i villaggi costieri indiscriminatamente.\nI diavoli marini che decidono di non partecipare alle razzie sono solitari e decidono di vivere in laghi e fiumi isolati, dove si nutrono di pesci e"
                 + " dei malcapitati che si avvicinano alla loro tana.\nFisicamente, questi diavoli marini assomigliano a delle lucertole marine, con la faccia di uno scorfano, i denti aguzzi e taglienti e gli occhi che nelle oscurità marine sembrano"
                 + " i fanali gialli di un auto.\nUna vera e propria bellezza marina insomma...\n\n");
-        Monster merrow = new Monster(7, null, "Merrow", "I merrow infestano le acque, dove aggrediscono i pescatori, i marinidi e qualsiasi altra creatura commestibile\n"
+        Monster merrow = new Monster(7, radio, "Merrow", "I merrow infestano le acque, dove aggrediscono i pescatori, i marinidi e qualsiasi altra creatura commestibile\n"
                 + "De incontrino sul loro cammino. Questi mostri selvaggi ghermiscono e divorano le prede più imprudenti per trascinare i loro cadaveri annegati nelle loro caverne sottomarine e cibarsene in tranquillità.\n"
                 + "La loro vicinanza agli abissi li ha resi malvagi e crudeli con il tempo.\nI merrow sono caratterizzati da una lunga coda a sirena molto squamosa che gli consente di muoversi velocemente e di difendersi dagli attacchi.\n\n");
         Monster mindFlayer = new Monster(8, null, "Mind Flayer", "I mind flayer, noti anche come illithid, sono l'anatema delle creature senzienti di innumerevoli mondi. Questi tiranni psionici, schiavisti e viaggiatori dimensionali ordiscono ciaborate trame per piegare intere razze ai loro fini nefasti.\n"
@@ -266,6 +269,7 @@ public class EnchantedForest extends GameDescription {
         fittaVegetazione.setWest(biforcazioneBosco);
         biforcazioneBosco.setWest(alfheim);
         alfheim.setWest(underDark);
+        underDark.setEast(alfheim);
         alfheim.setEast(biforcazioneBosco);
         biforcazioneBosco.setNorth(lago);
         cuoreBosco.setWest(fittaVegetazione);
@@ -278,6 +282,10 @@ public class EnchantedForest extends GameDescription {
         calipso.setEast(biforcazioneLago);
         calipso.setWest(tesoro);
         tesoro.setEast(calipso);
+        underDark.setVisible(false);
+        biforcazioneBosco.setVisible(false);
+        biforcazioneLago.setVisible(false);
+        tesoro.setVisible(false);
         getRooms().add(entrataBosco);
         getRooms().add(tanaTopoMannaro);
         getRooms().add(biforcazioneBosco);
@@ -303,31 +311,48 @@ public class EnchantedForest extends GameDescription {
 //move
             boolean noroom = false;
             boolean move = false;
+            boolean visible = true;
             if (p.getCommand().getType() == CommandType.NORD) {
                 if (getCurrentRoom().getNorth() != null) {
-                    setCurrentRoom(getCurrentRoom().getNorth());
-                    move = true;
+                    if (getCurrentRoom().getNorth().isVisible() == true) {
+                        setCurrentRoom(getCurrentRoom().getNorth());
+                        move = true;
+                    } else {
+                        visible = false;
+                    }
                 } else {
                     noroom = true;
                 }
             } else if (p.getCommand().getType() == CommandType.SOUTH) {
                 if (getCurrentRoom().getSouth() != null) {
-                    setCurrentRoom(getCurrentRoom().getSouth());
-                    move = true;
+                    if (getCurrentRoom().getSouth().isVisible() == true) {
+                        setCurrentRoom(getCurrentRoom().getSouth());
+                        move = true;
+                    } else {
+                        visible = false;
+                    }
                 } else {
                     noroom = true;
                 }
             } else if (p.getCommand().getType() == CommandType.EAST) {
                 if (getCurrentRoom().getEast() != null) {
-                    setCurrentRoom(getCurrentRoom().getEast());
-                    move = true;
+                    if (getCurrentRoom().getEast().isVisible() == true) {
+                        setCurrentRoom(getCurrentRoom().getEast());
+                        move = true;
+                    } else {
+                        visible = false;
+                    }
                 } else {
                     noroom = true;
                 }
             } else if (p.getCommand().getType() == CommandType.WEST) {
                 if (getCurrentRoom().getWest() != null) {
-                    setCurrentRoom(getCurrentRoom().getWest());
-                    move = true;
+                    if (getCurrentRoom().getWest().isVisible() == true) {
+                        setCurrentRoom(getCurrentRoom().getWest());
+                        move = true;
+                    } else {
+                        visible = false;
+                    }
                 } else {
                     noroom = true;
                 }
@@ -373,6 +398,9 @@ public class EnchantedForest extends GameDescription {
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
                                 out.println("Hai conquistato un nuovo oggetto che ti potrà aiutare a sconfiggere i futuri mostri!");
+                                if (getCurrentRoom().getMonster().getId() == 1) {
+                                    getCurrentRoom().getNorth().setVisible(true);
+                                }
                             } else {
                                 out.println("La spada non è efficace in questo caso. Riprova!");
                             }
@@ -389,11 +417,12 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.USE) {
                 try {
-                    if (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("veleno")) {
+                    if (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("veleno") || p.getInvObject().getName().equals("radio")) {
                         if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
                             Iterator<AdvObject> it = getInventory().iterator();
                             boolean findPoison = false;
                             boolean findThunder = false;
+                            boolean findRadio = false;
                             while (it.hasNext()) {
                                 AdvObject next = it.next();
                                 if (next.getName().equals("veleno")) {
@@ -403,12 +432,16 @@ public class EnchantedForest extends GameDescription {
                                 if (next.getName().equals("fiala del fulmine")) {
                                     findThunder = true;
                                 }
+                                if (next.getName().equals("radio")) {
+                                    findRadio = true;
+                                }
                             }
                             if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
                                 out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
                                 getCurrentRoom().getMonster().setAlive(false);
                                 setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
                                 getCurrentRoom().getMonster().setAlive(false);
+                                getCurrentRoom().getWest().setVisible(true);
                                 out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
                                 Iterator<AdvObject> re = getInventory().iterator();
 
@@ -423,6 +456,9 @@ public class EnchantedForest extends GameDescription {
                             if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
                                 out.println("Congratulazioni, hai ucciso il Merrow!");
                                 getCurrentRoom().getMonster().setAlive(false);
+                                getInventory().add(getCurrentRoom().getMonster().getDropObject());
+                                out.println("Hai ottenuto un altro oggetto all'interno dell'inventario!");
+                                getCurrentRoom().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
                                 while (re.hasNext()) {
@@ -445,6 +481,12 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
+                            }
+                            if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true) {
+                                if(getCurrentRoom().getEast().getMonster().getIsAlive() == true) 
+                                    endGood(out);
+                                else
+                                    endBad(out);
                             }
                         }
                     } else {
@@ -477,6 +519,7 @@ public class EnchantedForest extends GameDescription {
                                 setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
+                                getCurrentRoom().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
                                 while (re.hasNext()) {
@@ -490,6 +533,7 @@ public class EnchantedForest extends GameDescription {
                             if (getCurrentRoom().getMonster().getId() == 5 && findCoin == true) {
                                 getCurrentRoom().getMonster().setAlive(false);
                                 out.println("Davanti a te si apre un portale per gli abissi del lago.");
+                                getCurrentRoom().getNorth().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
                                 while (re.hasNext()) {
@@ -568,6 +612,8 @@ public class EnchantedForest extends GameDescription {
             }
             if (noroom) {
                 out.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
+            } else if (visible == false) {
+                out.println("Non hai ancora le giuste capacità per accedere a questa parte del mondo...");
             } else if (move) {
                 out.println(getCurrentRoom().getName());
                 out.println("================================================");
@@ -576,8 +622,19 @@ public class EnchantedForest extends GameDescription {
         }
     }
 
-    private void end(PrintStream out) {
-        out.println("final"); //fare due casi
+    private void endGood(PrintStream out) {
+        out.println("Congratulazioni, sei riuscito ad uccidere il Mind Flayer.\nAll'improvviso ti senti stordito e perdi i sensi. Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa. Il sole è ormai calato e intorno a te si sta facendo sempre più buio.\n"
+                + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza. Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans. Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\nCon questi pensieri,"
+                + " ritorni a casa per goderti la tua vacanza.\nStasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
+        System.exit(0);
+    }
+
+    private void endBad(PrintStream out) {
+        out.println("Hai deciso di attaccare il Mind Flayer, ma, nonostante l'oggetto potente che hai utilizzato, sei riuscito soltanto a stordirlo. Continui ad attaccarlo, ma sembra tutto vano.\nAll'improvviso il Mind Flayer decide di contrattaccare e tu sei troppo debole per resistere.\n"
+                + "Il Mind Flayer prima di darti il colpo di grazia ti dice:\"Posso essere sconfitto solo da qualcuno che ha compiuto buone azioni. Gli attacchi vili non hanno alcun effetto su una creatura altrettanto vile quanto me. Avresti potuto dare quella ghianda...\""
+                + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici. Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.\nInizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più."
+                + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità. In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini."
+                + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza. Resterai qui con me per l'eternità.\"\nMagari in un'altra vita ci penserai due volte a compiere determinate azioni...");
         System.exit(0);
     }
 }
