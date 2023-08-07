@@ -46,8 +46,22 @@ public class Engine {
         System.out.println("================================");
         System.out.println("* ENCHANTED FOREST *"); 
         System.out.println("================================");
+        System.out.println("\n\n-- INTRODUZIONE --\n"
+                + "Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori.\n"
+                + "Sei molto contrario, avresti preferito rimanere nella tua città con i tuoi amici, invece ti ritrovi in un luogo\n"
+                + "sperduto dove nessun oggetto tecnologico funziona. Con questi pensieri in mente, ti rendi conto che siete arrivati\n"
+                + "al luogo della villeggiatura. Intravedi in lontananza la cassettina dove passerete questo mese di vacanza. Arrivato,\n"
+                + "sistemi la valigia e, spinto dai tuoi genitori, decidi di inoltrarti nel bosco per esplorarlo. Entrato nel bosco vedi\n"
+                + "la fitta vegetazione e osservi gli scoiattolini che gironzolano tra gli alberi. Ti stai annoiando a morte.\n"
+                + "All'improvviso senti uno strano rumore provenire dalla tua sinistra, voltandoti noti una strana crepa insita in alcune rocce.\n"
+                + "Ti ci avvicini e con sorpresa noti che la crepa è sufficientemente grande per poterci passare attraverso.\n"
+                + "Non ci pensi due volte. Ti ritrovi all'interno di una caverna. Purtroppo è un lungo completamento oscuro quindi\n"
+                + "non riesce a intravedere niente. Cerchi di fare qualche passo ma come una \"pera cotta\" cadi a terra... Sei svenuto...\n"
+                + "Dopo un po' di tempo ti risvegli e sei completamente indolenzito dalla caduta. Preso dal dolore non noti che non ti trovi\n"
+                + "più all'interno della caverna ma sei stato trasportato all'interno di un bosco. Dopo un po' noti il cambio di paesaggio,\n"
+                + "non capendo come tu ci sia finito, decidi comunque di dare un'occhiata intorno...\n\n");
         System.out.println(game.getCurrentRoom().getName());
-        System.out.println();
+        System.out.println("================================================");
         System.out.println(game.getCurrentRoom().getDescription());
         System.out.println();
         Scanner scanner = new Scanner(System.in);
