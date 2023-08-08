@@ -6,6 +6,7 @@
 package di.uniba.map.b.adventure.games;
 
 import di.uniba.map.b.adventure.GameDescription;
+import di.uniba.map.b.adventure.parser.DataFile;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.type.AdvObject;
 import di.uniba.map.b.adventure.type.AdvObjectContainer;
@@ -78,8 +79,10 @@ public class EnchantedForest extends GameDescription {
         getCommands().add(use);
 
         //obejcts
-        AdvObject sword = new AdvObject(1, "spada", "La spada donata dall'aiutante era un'opera d'arte incredibile, che incantava chiunque posasse gli occhi su di essa. Lunga e affilata, emanava un'aura di potere e maestosità."
-                + "La lama era realizzata in acciaio lucido e rifinita con cura, riflettendo la luce con una brillantezza accecante. La sua forma sinuosa era adornata da motivi intricati e intagli dettagliati lungo tutto il filo, raffiguranti simboli misteriosi e immagini leggendarie.");
+        DataFile objFile = new DataFile();
+        objFile.writeObjFile();
+        
+        AdvObject sword = new AdvObject(1, "spada", "");
         getInventory().add(sword);
         sword.setAlias(new String[]{"spadone", "lama", "arma"});
         AdvObjectContainer chest = new AdvObjectContainer(5, "forziere", "Il forziere divino nascondeva al suo interno segreti e tesori sconosciuti, doni degli dei e legami con il mondo della natura. Si diceva che solo coloro che avessero dimostrato una connessione profonda con il mare e una purezza d'animo avrebbero potuto aprirlo e accedere ai suoi tesori.");
@@ -110,6 +113,7 @@ public class EnchantedForest extends GameDescription {
                 + "Ha una forma piccola, che la rende tascabile. E' forse l'oggetto più adorabile che tu abbia mai visto. La sua utilità è ancora sconosciuta.");
         radio.setAlias(new String[]{"radiolina"});
 //Monster
+
         Monster topoMannaro = new Monster(1, fire, "Topo Mannaro", "I topi mannari sono scaltri licantropi dall'indole avida e subdola. In forma umana sono snelli e nervosi, hanno i capelli radi e gli occhi sfuggenti.\n"
                 + "Solitamente usano armi leggere e prediligono le imboscate piuttosto che muoversi in branco. Usa la sua forza principalmente per muoversi furtivamente e per scappare.\nI topi mannari, in forma ibrida o umanoide,"
                 + "sono esteticamente caratterizzati dal loro spirito licantropo, ossia hanno fattezze molto simili ai topi. Gli occhi sono di un rosso scarlatto, privi di qualsiasi cenno di ragione. I denti soono molto"
@@ -145,6 +149,7 @@ public class EnchantedForest extends GameDescription {
                 + " poichè contengono tutti gli enzimi, gli ormoni e l'energia psichica di cui hanno bisogno.\nUn illithid in piena salute è ricoperto da un velo di muco color malva. I cervelli sono preziosi anche per i loro esperimenti quali la trasformazione in divoracervelli.\n"
                 + "Con tutti quei tentacoli chissà cos'è in grado di fare...\n\n");
 //Rooms
+
         Room entrataBosco = new Room(1, null, "Entrata bosco.", "Ti trovi all'entrata del bosco.\n"
                 + "Questo bosco era pieno di alberi e di altissime piante con delle bellissime e grandi foglie e fiori che emanavano un profumo così dolce"
                 + " e intenso e in sottofondo il rumore dell'acqua che scorreva.\nDavanti a te c'è un sentiero che si inoltra al suo interno e ti senti osservato."
@@ -165,7 +170,6 @@ public class EnchantedForest extends GameDescription {
                 + "L'odore di sangue pervade per tutta la stanza."
                 + "Il topo mannaro si accorge della tua presenza e ti attacca. Non hai scelta, devi difenderti.\nCosa pensi di fare?\n\n");
         tanaTopoMannaro.getObjects().add(fire);
-//la continueremo quando lui attacca in un altro punto.
         Room biforcazioneBosco = new Room(3, null, "Biforcazione.", "Sei riuscito ad uscire dalla tana del topo mannaro, l'atmosfera rispetto all'inizio sembra essere completamente cambiata,"
                 + " è più cupa e ti da quasi un senso di inospitalità. Persino i fiori sembrano essere ostili.\n"
                 + "Dove vuoi andare?\n\n");
@@ -175,8 +179,6 @@ public class EnchantedForest extends GameDescription {
                 + "All'improvviso le radici degli alberi cominciano a muoversi e ti si attorcigliano alle caviglie, tentando di afferrarti."
                 + "Di fronte a te appare un cumulo di radici ed erbacce dal pessimo odore. Cerchi di liberarti tagliando le radici attorno le tue caviglie, ma è tutto inutile."
                 + "Continuano a rigenerarsi troppo velocemente!\n\n");
-
-// attendiamo comandi
         fittaVegetazione.setLook("Improvvisamente appare nuovamente la figura incontrata in precedenza, che chissà puoi definirlo come un aiutante.\n"
                 + "Si rivolge verso di te dicendo: \"Sono accorso percependo la tua disperazione! Sei proprio un caso perso. "
                 + "Oltre la spada non hai altro nell'inventario? Controlla!\"\n"
