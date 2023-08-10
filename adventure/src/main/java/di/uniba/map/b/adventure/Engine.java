@@ -6,11 +6,13 @@
 package di.uniba.map.b.adventure;
 
 import di.uniba.map.b.adventure.games.EnchantedForest;
+import di.uniba.map.b.adventure.parser.DatabaseTime;
 import di.uniba.map.b.adventure.parser.Parser;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.type.CommandType;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -42,7 +44,8 @@ public class Engine {
         }
     }
 
-    public void execute() {
+    public void execute() throws SQLException {
+        DatabaseTime.Time();
         System.out.println("================================");
         System.out.println("* ENCHANTED FOREST *"); 
         System.out.println("================================");
@@ -82,8 +85,9 @@ public class Engine {
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
             Engine engine = new Engine(new EnchantedForest());
             engine.execute();
     }
