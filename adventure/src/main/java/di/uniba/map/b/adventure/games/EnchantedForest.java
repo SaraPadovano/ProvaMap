@@ -7,6 +7,7 @@ package di.uniba.map.b.adventure.games;
 
 import di.uniba.map.b.adventure.GameDescription;
 import di.uniba.map.b.adventure.parser.DatabaseTime;
+import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.parser.LoadFile;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.parser.WriteFile;
@@ -516,6 +517,9 @@ public class EnchantedForest extends GameDescription {
         out.println("Congratulazioni, sei riuscito ad uccidere il Mind Flayer.\nAll'improvviso ti senti stordito e perdi i sensi. Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa. Il sole è ormai calato e intorno a te si sta facendo sempre più buio.\n"
                 + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza. Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans. Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\nCon questi pensieri,"
                 + " ritorni a casa per goderti la tua vacanza.\nStasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
+        GameTimer.stopTimer(); 
+        long elapsedGameTime = GameTimer.getTotalGameTime();
+        System.out.println("Il gioco è finito! Tempo di gioco totale: " + elapsedGameTime/1000 + " secondi");
         DatabaseTime.readTime();
         System.exit(0);
     }
@@ -526,6 +530,9 @@ public class EnchantedForest extends GameDescription {
                 + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici. Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.\nInizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più."
                 + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità. In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini."
                 + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza. Resterai qui con me per l'eternità.\"\nMagari in un'altra vita ci penserai due volte a compiere determinate azioni...");
+        GameTimer.stopTimer(); 
+        long totalGameTime = GameTimer.getTotalGameTime();
+        System.out.println("Il gioco è finito! Tempo di gioco totale: " + totalGameTime/1000 + " secondi");
         DatabaseTime.readTime();
         System.exit(0);
     }

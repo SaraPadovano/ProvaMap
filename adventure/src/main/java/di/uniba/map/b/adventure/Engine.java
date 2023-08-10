@@ -7,6 +7,7 @@ package di.uniba.map.b.adventure;
 
 import di.uniba.map.b.adventure.games.EnchantedForest;
 import di.uniba.map.b.adventure.parser.DatabaseTime;
+import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.parser.Parser;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.type.CommandType;
@@ -45,6 +46,9 @@ public class Engine {
     }
 
     public void execute() throws SQLException {
+        GameTimer gameTimer = new GameTimer();
+        Thread timerThread = new Thread(gameTimer);
+        timerThread.start();
         DatabaseTime.Time();
         System.out.println("================================");
         System.out.println("* ENCHANTED FOREST *"); 
