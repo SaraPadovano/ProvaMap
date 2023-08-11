@@ -26,6 +26,7 @@ public class GameTimer implements Runnable {
                 Thread.sleep(1000); 
             } catch (InterruptedException e) {
                 System.out.println("Errore durante l'esecuzione.\n");
+                return;
             }
         }
     }

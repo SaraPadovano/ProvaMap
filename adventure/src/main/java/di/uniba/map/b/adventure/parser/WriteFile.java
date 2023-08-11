@@ -54,17 +54,17 @@ public class WriteFile {
         "Sei riuscito ad uscire dalla tana del topo mannaro, l'atmosfera rispetto all'inizio sembra essere completamente cambiata,"
         + " è più cupa e ti da quasi un senso di inospitalità. Persino i fiori sembrano essere ostili.\n"
         + "Dove vuoi andare?\n\n",
-        "Hai deciso di intraprendere il sentiero a ovest, ma la vegetazione è così fitta che non riesci a passare.\n"
+        "Hai deciso di intraprendere il sentiero a est, ma la vegetazione è così fitta che non riesci a passare.\n"
         + "All'improvviso le radici degli alberi cominciano a muoversi e ti si attorcigliano alle caviglie, tentando di afferrarti."
         + "Di fronte a te appare un cumulo di radici ed erbacce dal pessimo odore. Cerchi di liberarti tagliando le radici attorno le tue caviglie, ma è tutto inutile."
         + "Continuano a rigenerarsi troppo velocemente!\n\n",
         "Sei riuscito a liberarti dal cumulo strisciante e a proseguire il tuo cammino.\n"
         + "Il sentiero ti ha portato in una radura, dove c'è un albero enorme, così grande che non riesci a vedere la cima.\n"
         + "L'albero ha un volto, è un treant! Ti guarda e sembra voglia dirti qualcosa...\n",
-        "Hai deciso di proseguire il tuo cammino verso est, ma la foresta è sempre più oscura e l'atmosfera diventa sempre più opprimente.\n"
+        "Hai deciso di proseguire il tuo cammino verso ovest, ma la foresta è sempre più oscura e l'atmosfera diventa sempre più opprimente.\n"
         + "All'improvviso appare una figura femminile, è una Driade! Ti guarda con occhi ignettati di sangue e prima ancora che tu possa accorgerti della sua presenza"
         + "si avventa su di te, per fortuna hai i riflessi pronti e riesci ad uscirne illeso, ma la furia della Driade non si placa così facilmente...\n\n",
-        "Hai deciso di proseguire il tuo cammino verso sud, ma il rumore dell'acqua è sempre più forte.\n"
+        "Hai deciso di proseguire il tuo cammino verso nord, ma il rumore dell'acqua è sempre più forte.\n"
         + "All'improvviso appare un lago circondato da una fitta nebbia e la sua superficie è completamente immobile e cristallina.\n"
         + "La nebbia si dirada e appare una mistica creatura, tanto elegante quanto spaventosa...\n"
         + "Non riesci a muoverti per la paura, la sua presenza ti incute terrore, come riflesso inizi ad attaccarlo con ogni tuo mezzo... ma è tutto inutile!\n"

@@ -20,6 +20,8 @@ import di.uniba.map.b.adventure.type.Room;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
@@ -72,15 +74,18 @@ public class EnchantedForest extends GameDescription {
         Command attack = new Command(CommandType.ATTACK, "attacca");
         attack.setAlias(new String[]{"colpisci", "uccidi", "ferisci", "distruggi"});
         getCommands().add(attack);
-        Command give = new Command(CommandType.GIVE, "dare");
-        give.setAlias(new String[]{"porgi", "porre", "do", "lancia"});
+        Command give = new Command(CommandType.GIVE, "dai");
+        give.setAlias(new String[]{"dare", "porgi", "porre", "do", "lancia"});
         getCommands().add(give);
         Command monster = new Command(CommandType.MONSTER, "mostro");
-        monster.setAlias(new String[]{"creatura", "osserva mostro", "osserva creatura"}); //da provare se funzionano gli alias
+        monster.setAlias(new String[]{"creatura"});
         getCommands().add(monster);
         Command use = new Command(CommandType.USE, "usa");
         use.setAlias(new String[]{"utilizza", "lancia", "butta", "getta"});
         getCommands().add(use);
+        Command time = new Command(CommandType.TIME, "tempo");
+        time.setAlias(new String[]{"time"});
+        getCommands().add(time);
 
         //obejcts
         WriteFile.writeObjFile();
@@ -264,7 +269,9 @@ public class EnchantedForest extends GameDescription {
                 } else {
                     out.println("Non c'è niente di interessante qui.");
                 }
-            } else if (p.getCommand().getType() == CommandType.MONSTER) {
+            }else if(p.getCommand().getType() == CommandType.TIME){
+                     out.println( "Il tuo tempo di gioco corrente è : " +  GameTimer.getTotalGameTime()/1000);
+            }else if (p.getCommand().getType() == CommandType.MONSTER) {
                 if (getCurrentRoom().getMonster() != null) {
                     out.println(getCurrentRoom().getMonster().getDescription());
                 }
@@ -518,8 +525,8 @@ public class EnchantedForest extends GameDescription {
                 + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza. Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans. Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\nCon questi pensieri,"
                 + " ritorni a casa per goderti la tua vacanza.\nStasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
         GameTimer.stopTimer(); 
-        long elapsedGameTime = GameTimer.getTotalGameTime();
-        System.out.println("Il gioco è finito! Tempo di gioco totale: " + elapsedGameTime/1000 + " secondi");
+        int elapsedGameTime =(int) GameTimer.getTotalGameTime();
+        DatabaseTime.writeTime(elapsedGameTime/1000);
         DatabaseTime.readTime();
         System.exit(0);
     }
@@ -531,8 +538,8 @@ public class EnchantedForest extends GameDescription {
                 + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità. In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini."
                 + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza. Resterai qui con me per l'eternità.\"\nMagari in un'altra vita ci penserai due volte a compiere determinate azioni...");
         GameTimer.stopTimer(); 
-        long totalGameTime = GameTimer.getTotalGameTime();
-        System.out.println("Il gioco è finito! Tempo di gioco totale: " + totalGameTime/1000 + " secondi");
+        int elapsedGameTime =(int) GameTimer.getTotalGameTime();
+        DatabaseTime.writeTime(elapsedGameTime/1000);
         DatabaseTime.readTime();
         System.exit(0);
     }
