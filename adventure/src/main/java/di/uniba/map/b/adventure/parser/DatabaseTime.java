@@ -15,9 +15,10 @@ import java.sql.Statement;
  *
  * @author acer
  */
+
 public class DatabaseTime {
    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS time (playId INT PRIMARY KEY, playTime INTEGER)";
-    
+ 
     public static void Time() throws SQLException{
         try{
             Connection conn = DriverManager.getConnection("jdbc:h2:./db/db");
