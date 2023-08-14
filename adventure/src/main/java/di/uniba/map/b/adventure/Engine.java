@@ -10,12 +10,21 @@ import di.uniba.map.b.adventure.parser.DatabaseTime;
 import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.parser.Parser;
 import di.uniba.map.b.adventure.parser.ParserOutput;
+import di.uniba.map.b.adventure.rest.RestWeather;
+import di.uniba.map.b.adventure.rest.TimeService;
 import di.uniba.map.b.adventure.type.CommandType;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ws.rs.core.UriBuilder;
+import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.server.ResourceConfig;
 
 /**
  * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
@@ -53,8 +62,9 @@ public class Engine {
         System.out.println("================================");
         System.out.println("* ENCHANTED FOREST *"); 
         System.out.println("================================");
-        System.out.println("\n\n-- INTRODUZIONE --\n"
-                + "Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori.\n"
+        System.out.println("\n\n-- INTRODUZIONE --\n");
+        RestWeather.clientWeather();
+        System.out.println("Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori.\n"
                 + "Sei molto contrario, avresti preferito rimanere nella tua città con i tuoi amici, invece ti ritrovi in un luogo\n"
                 + "sperduto dove nessun oggetto tecnologico funziona. Con questi pensieri in mente, ti rendi conto che siete arrivati\n"
                 + "al luogo della villeggiatura. Intravedi in lontananza la cassettina dove passerete questo mese di vacanza. Arrivato,\n"
@@ -92,8 +102,16 @@ public class Engine {
      * @throws java.sql.SQLException
      */
     public static void main(String[] args) throws SQLException {
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
+        ResourceConfig config = new ResourceConfig(TimeService.class);
+        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
+        try {
+            server.start();
             Engine engine = new Engine(new EnchantedForest());
             engine.execute();
+            server.shutdown();
+        } catch (IOException ex) {
+            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
 }

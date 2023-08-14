@@ -6,11 +6,11 @@
 package di.uniba.map.b.adventure.games;
 
 import di.uniba.map.b.adventure.GameDescription;
-import di.uniba.map.b.adventure.parser.DatabaseTime;
 import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.parser.LoadFile;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.parser.WriteFile;
+import di.uniba.map.b.adventure.rest.RestClientTime;
 import di.uniba.map.b.adventure.type.AdvObject;
 import di.uniba.map.b.adventure.type.AdvObjectContainer;
 import di.uniba.map.b.adventure.type.Command;
@@ -20,8 +20,6 @@ import di.uniba.map.b.adventure.type.Room;
 import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
@@ -526,8 +524,7 @@ public class EnchantedForest extends GameDescription {
                 + " ritorni a casa per goderti la tua vacanza.\nStasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
         GameTimer.stopTimer(); 
         int elapsedGameTime =(int) GameTimer.getTotalGameTime();
-        DatabaseTime.writeTime(elapsedGameTime/1000);
-        DatabaseTime.readTime();
+        RestClientTime.clientTime(elapsedGameTime/1000);
         System.exit(0);
     }
 
@@ -539,8 +536,7 @@ public class EnchantedForest extends GameDescription {
                 + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza. Resterai qui con me per l'eternità.\"\nMagari in un'altra vita ci penserai due volte a compiere determinate azioni...");
         GameTimer.stopTimer(); 
         int elapsedGameTime =(int) GameTimer.getTotalGameTime();
-        DatabaseTime.writeTime(elapsedGameTime/1000);
-        DatabaseTime.readTime();
+       RestClientTime.clientTime(elapsedGameTime/1000);
         System.exit(0);
     }
 }
