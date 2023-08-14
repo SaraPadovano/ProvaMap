@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+
 /**
  *
  * @author pierpaolo
@@ -52,11 +53,11 @@ public class AdvObject {
     }
 
     public String getName() {
-        return name;
+         return name;
     }
-
+    
     public void setName(String name) {
-        this.name = name;
+          this.name=name;
     }
 
     public String getDescription() {

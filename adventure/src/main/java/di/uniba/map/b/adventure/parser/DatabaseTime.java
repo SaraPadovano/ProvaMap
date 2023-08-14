@@ -15,9 +15,10 @@ import java.sql.Statement;
  *
  * @author acer
  */
+
 public class DatabaseTime {
    public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS time (playId INT PRIMARY KEY, playTime INTEGER)";
-    
+ 
     public static void Time() throws SQLException{
         try{
             Connection conn = DriverManager.getConnection("jdbc:h2:./db/db");
@@ -59,19 +60,20 @@ public class DatabaseTime {
         }
     }
     
-    public static void readTime() throws SQLException {
+    public static int readTime() throws SQLException {
         try{
         Connection conn = DriverManager.getConnection("jdbc:h2:./db/db");
         Statement som = conn.createStatement();
-            System.out.println("=======================");
             ResultSet rs = som.executeQuery("SELECT playId, playTime FROM time WHERE (SELECT MAX(playId) FROM time)=playId");
             rs.next();
-            System.out.println("Il tuo tempo di gioco è stato: "+ rs.getInt(2));
+            int tempo = rs.getInt(2);
             rs.close();
             som.close();
             conn.close();
+            return tempo;
         }catch (SQLException ex){
             System.err.println(ex.getSQLState() + ": " + ex.getMessage());
         }
+       return 0;
     }
 }
