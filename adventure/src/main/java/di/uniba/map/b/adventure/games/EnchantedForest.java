@@ -118,8 +118,8 @@ public class EnchantedForest extends GameDescription {
 
         Monster topoMannaro = new Monster(1, fire, "Topo Mannaro", LoadFile.readMonsterFile(1));
         Monster cumuloStrisciante = new Monster(2, null, "Cumulo Strisciante", LoadFile.readMonsterFile(2));
-        Monster treant = new Monster(3, coin, "Treant", LoadFile.readMonsterFile(3));
-        Monster driade = new Monster(4, null, "Driade", LoadFile.readMonsterFile(4));
+        Monster treant = new Monster(3, null, "Treant", LoadFile.readMonsterFile(3));
+        Monster driade = new Monster(4, coin, "Driade", LoadFile.readMonsterFile(4));
         Monster fataleAcqua = new Monster(5, null, "Fatale dell' Acqua", LoadFile.readMonsterFile(5));
         Monster diavoloMarino = new Monster(6, thunder, "Diavolo Marino", LoadFile.readMonsterFile(6));
         Monster merrow = new Monster(7, radio, "Merrow", LoadFile.readMonsterFile(7));
@@ -137,11 +137,9 @@ public class EnchantedForest extends GameDescription {
         biforcazioneBosco.setLook(LoadFile.readRoomLookFile(3));
         Room fittaVegetazione = new Room(4, cumuloStrisciante, "Fitta vegetazione.", LoadFile.readRoomDescFile(4));
         fittaVegetazione.setLook(LoadFile.readRoomLookFile(4));
-        Room cuoreBosco = new Room(5, treant, "Cuore del bosco.", LoadFile.readRoomDescFile(5));
-        cuoreBosco.setLook(LoadFile.readRoomLookFile(5));
-        cuoreBosco.getObjects().add(coin);
         Room alfheim = new Room(6, driade, "Alfheim.", LoadFile.readRoomDescFile(6));
         alfheim.setLook(LoadFile.readRoomLookFile(6));
+        alfheim.getObjects().add(coin);
         Room lago = new Room(7, fataleAcqua, "Lago.", LoadFile.readRoomDescFile(7));
         Room biforcazioneLago = new Room(8, null, "Biforcazione.", LoadFile.readRoomDescFile(8));
         biforcazioneLago.setLook(LoadFile.readRoomLookFile(8));
@@ -153,20 +151,19 @@ public class EnchantedForest extends GameDescription {
         tesoro.getObjects().add(chest);
         Room underDark = new Room(12, mindFlayer, "Under Dark.", LoadFile.readRoomDescFile(12));
         underDark.setLook(LoadFile.readRoomLookFile(12));
+        Room radici = new Room(5, treant, "Radici del Treant", LoadFile.readRoomDescFile(5));
 //map
         entrataBosco.setNorth(tanaTopoMannaro);
         tanaTopoMannaro.setNorth(biforcazioneBosco);
         tanaTopoMannaro.setSouth(entrataBosco);
         biforcazioneBosco.setEast(fittaVegetazione);
         biforcazioneBosco.setSouth(tanaTopoMannaro);
-        fittaVegetazione.setEast(cuoreBosco);
         fittaVegetazione.setWest(biforcazioneBosco);
         biforcazioneBosco.setWest(alfheim);
         alfheim.setWest(underDark);
         underDark.setEast(alfheim);
         alfheim.setEast(biforcazioneBosco);
         biforcazioneBosco.setNorth(lago);
-        cuoreBosco.setWest(fittaVegetazione);
         lago.setNorth(biforcazioneLago);
         lago.setSouth(biforcazioneBosco);
         biforcazioneLago.setEast(abissi);
@@ -176,7 +173,10 @@ public class EnchantedForest extends GameDescription {
         calipso.setEast(biforcazioneLago);
         calipso.setWest(tesoro);
         tesoro.setEast(calipso);
-        underDark.setVisible(true);
+        tesoro.setWest(radici);
+        radici.setEast(tesoro);
+        underDark.setVisible(false);
+        radici.setVisible(false);
         biforcazioneBosco.setVisible(false);
         biforcazioneLago.setVisible(false);
         tesoro.setVisible(false);
@@ -184,7 +184,7 @@ public class EnchantedForest extends GameDescription {
         getRooms().add(tanaTopoMannaro);
         getRooms().add(biforcazioneBosco);
         getRooms().add(fittaVegetazione);
-        getRooms().add(cuoreBosco);
+        getRooms().add(radici);
         getRooms().add(alfheim);
         getRooms().add(underDark);
         getRooms().add(lago);
@@ -258,7 +258,7 @@ public class EnchantedForest extends GameDescription {
             } else if (p.getCommand().getType() == CommandType.LOOK_AT) {
                 if (getCurrentRoom().getLook() != null) {
                     out.println(getCurrentRoom().getLook());
-                    if (getCurrentRoom().getName().equals("Cuore del bosco.")) {
+                    if (getCurrentRoom().getName().equals("Alfheim.")) {
                         if (looked != true) {
                             getInventory().add(getCurrentRoom().getMonster().getDropObject());
                             looked = true;
@@ -335,7 +335,7 @@ public class EnchantedForest extends GameDescription {
                             if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
                                 out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
                                 getCurrentRoom().getMonster().setAlive(false);
-                                setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
+                                setCurrentRoom(getCurrentRoom().getEast().getEast().getEast().getSouth().getSouth().getWest());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getCurrentRoom().getWest().setVisible(true);
                                 out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
@@ -355,6 +355,7 @@ public class EnchantedForest extends GameDescription {
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
                                 out.println("Hai ottenuto un altro oggetto all'interno dell'inventario!");
                                 getCurrentRoom().getWest().setVisible(true);
+                                getCurrentRoom().getWest().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
                                 while (re.hasNext()) {
@@ -412,8 +413,8 @@ public class EnchantedForest extends GameDescription {
                             }
                             if (getCurrentRoom().getMonster().getId() == 3 && findAcorn == true) {
                                 out.println("Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
-                                setCurrentRoom(getCurrentRoom().getWest().getWest().getWest());
-                                getCurrentRoom().getMonster().setAlive(false);
+                                setCurrentRoom(getCurrentRoom().getEast().getEast().getEast().getSouth().getSouth().getWest());
+                                getCurrentRoom().getMonster().setAlive(true);
                                 out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
                                 getCurrentRoom().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
