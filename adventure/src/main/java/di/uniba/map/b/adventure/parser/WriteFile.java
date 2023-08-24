@@ -58,9 +58,9 @@ public class WriteFile {
         + "All'improvviso le radici degli alberi cominciano a muoversi e ti si attorcigliano alle caviglie, tentando di afferrarti."
         + "Di fronte a te appare un cumulo di radici ed erbacce dal pessimo odore. Cerchi di liberarti tagliando le radici attorno le tue caviglie, ma è tutto inutile."
         + "Continuano a rigenerarsi troppo velocemente!\n\n",
-        "Sei riuscito a liberarti dal cumulo strisciante e a proseguire il tuo cammino.\n"
-        + "Il sentiero ti ha portato in una radura, dove c'è un albero enorme, così grande che non riesci a vedere la cima.\n"
-        + "L'albero ha un volto, è un treant! Ti guarda e sembra voglia dirti qualcosa...\n",
+        "Sei giunto in un'altra misteriosa stanza. L'atmosfera, rispetto a quella del castello, è molto più scura e sacra. Di fronte a te, si stagliano le radici di un grande albero. Probabilmente sono le radici del Treant di cui ti ha parlato l'aiutante.\n"
+            + "In mezzo alla stanza, nascosta dalle lunghe radici, è presente un altare sacrificale. E' il momento di compiere la tua scelta: "
+            + "usare il veleno o dare la ghianda?\n\n",
         "Hai deciso di proseguire il tuo cammino verso ovest, ma la foresta è sempre più oscura e l'atmosfera diventa sempre più opprimente.\n"
         + "All'improvviso appare una figura femminile, è una Driade! Ti guarda con occhi ignettati di sangue e prima ancora che tu possa accorgerti della sua presenza"
         + "si avventa su di te, per fortuna hai i riflessi pronti e riesci ad uscirne illeso, ma la furia della Driade non si placa così facilmente...\n\n",
@@ -123,19 +123,18 @@ public class WriteFile {
         + "Si rivolge verso di te dicendo: \"Sono accorso percependo la tua disperazione! Sei proprio un caso perso. "
         + "Oltre la spada non hai altro nell'inventario? Controlla!\"\n"
         + "Così l'aiutante sparisce esattamente com'era comparso lasciandoti anche un pò imbarazzato.\n\n",
-        "Ti avvicini all'albero. Finalmente riesci a comprendere le sue parole: \"Sono la divinità di questo bosco, "
-        + "sono qui da migliaia di anni e non ho mai visto un essere umano. "
-        + "Non so come tu sia arrivato qui, ma non puoi rimanere. Questo bosco è pericoloso per te, devi andartene!\"\n"
+        "",
+        "Ti rendi conto che alcun attacco scalfisce la Driade, così decidi momentaneamente di ritirarti dietro un cespuglio e osservarla.\n"
+        + "Compare, improvvisamente al tuo fianco, l'aiutante. Ha pensato che sia giusto farti capire cosa sta succedendo nel bosco: \"Nel bosco risiede una divinità, il Treant. "
+        + "Risiede qui da migliaia di anni e non ha mai visto un essere umano. "
         + "Il treant sembra essere preoccupato per te.\nSe vuoi tornare da dove sei venuto, per quanto mi è possibile, posso darti una mano.\n"
-        + "Come hai potuto ben vedere il bosco è circondato da una presenza oscura, la Driade è impazzite a causa della malattia che mi affligge ed ha trasformato questo posto in una valle oscura.\n"
-        + "Tempo fa iniziarono delle strane piogge, che hanno iniziato a corrodermi dall'interno, rendendomi vulnerabile.\n"
-        + "Giovane avventuriero, il tuo compito sarà quello di ritrovare la ghianda da me perduta, per ristabilire l'equilibrio.\n"
-        + "Tale ghianda dovrebbe trovarsi da qualche parte all'interno del bosco.\n Se non dovessi riuscire a trovarla vorrei che che tu ponga fine alle mie sofferenze,"
-        + "tramite un apposito veleno... Sono disposto a tutto per ristabilire l'equilibrio del bosco! In ogni caso riusciresti a superare"
+        + "Come hai potuto ben vedere il bosco è circondato da una presenza oscura, la Driade è impazzita a causa della malattia che affligge il Treant e che ha trasformato questo posto in una valle oscura.\n"
+        + "Tempo fa iniziarono delle strane piogge, che hanno iniziato a corrodere l'albero dall'interno, rendendolo vulnerabile.\n"
+        + "Giovane avventuriero, il tuo compito sarà quello di ritrovare la ghianda perduta dall'albero, per ristabilire l'equilibrio.\n"
+        + "Tale ghianda dovrebbe trovarsi da qualche parte all'interno del bosco.\n Se non dovessi riuscire a trovarla vorrei che che tu ponga fine alle sofferenze del Treant,"
+        + "tramite un apposito veleno... Sia io che il Treant siamo disposti a tutto per ristabilire l'equilibrio del bosco! In ogni caso riusciresti a superare"
         + "la Driade.\n Buona fortuna avventuriero... Rimarrò qui in attesa che tu faccia ritorno...\""
-        + "Prima di allontanarti il Treant ti dona una moneta, da qui a breve riuscirai a capire a cosa ti sarà utile...\n\n",
-        "Ti rendi conto che alcun attacco scalfisce la Driade, ma non abbastanza da farla desistere dal suo intento.\n"
-        + "A volte scappare è la migliore opzione...\n\n",
+        + "Prima di allontanarti l'aiutante ti dona una moneta, da qui a breve riuscirai a capire a cosa ti sarà utile...\n\n",
         "",
         "La biforcazione si divide in due. A est la vegetazione marina continua ed essere rigogliosa ma non ci sono più le piccole"
         + "e adorate creaturine del lago che hai potuto ammirare in precedenza. Forse c'è qualcosa che non va, però sembra essere più rassicurante del sentiero ad ovest"
