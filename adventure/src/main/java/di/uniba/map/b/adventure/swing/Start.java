@@ -163,7 +163,11 @@ public class Start extends JFrame {
         }
         //</editor-fold>
 
-        Start start = new Start();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                Start start = new Start();
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
