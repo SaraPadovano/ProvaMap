@@ -331,7 +331,7 @@ public class EnchantedForest extends GameDescription {
                                     findRadio = true;
                                 }
                             }
-                            if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
+                            if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true && p.getInvObject().getName().equals("veleno")) {
                                 a1.append("\n" + "Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
                                 getCurrentRoom().getMonster().setAlive(false);
                                 setCurrentRoom(getCurrentRoom().getEast().getEast().getEast().getSouth().getSouth().getWest());
@@ -347,8 +347,10 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
+                            } else{
+                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
-                            if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
+                            if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true &&  p.getInvObject().getName().equals("fiala del fulmine")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il Merrow!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
@@ -364,8 +366,10 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
+                            }else{
+                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
-                            if (getCurrentRoom().getMonster().getId() == 2) {
+                            if (getCurrentRoom().getMonster().getId() == 2 && p.getInvObject().getName().equals("fiala del fuoco")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il cumulo strisciante!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 Iterator<AdvObject> re = getInventory().iterator();
@@ -377,13 +381,17 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
+                            }else{
+                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
-                            if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true) {
+                            if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true && p.getInvObject().getName().equals("radio")) {
                                 if (getCurrentRoom().getEast().getMonster().getIsAlive() == true) {
                                     endGood(a1);
                                 } else {
                                     endBad(a1);
                                 }
+                            }else{
+                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
                         }
                     } else {

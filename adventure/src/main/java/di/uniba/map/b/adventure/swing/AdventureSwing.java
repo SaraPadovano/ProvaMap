@@ -89,7 +89,6 @@ public final class AdventureSwing extends javax.swing.JFrame {
         jTextArea1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTextArea1.setMinimumSize(new java.awt.Dimension(113, 28));
         jTextArea1.setOpaque(false);
-        jTextArea1.setPreferredSize(new java.awt.Dimension(397, 124));
         jScrollPane1.setViewportView(jTextArea1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -102,8 +101,7 @@ public final class AdventureSwing extends javax.swing.JFrame {
         });
         jPanel1.add(jTextField1);
 
-        jButton1.setFont(new java.awt.Font("Dubai", 2, 14)); // NOI18N
-        jButton1.setText("OK");
+        jButton1.setText("Ok");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setMaximumSize(new java.awt.Dimension(72, 23));
         jButton1.setMinimumSize(new java.awt.Dimension(72, 23));

@@ -31,6 +31,6 @@ public class RestClientTime {
                 .put(Entity.entity(gson.toJson(tempo), MediaType.APPLICATION_JSON));
         
         Response respGet = target.path("time").request(MediaType.APPLICATION_JSON).get();
-       JOptionPane.showConfirmDialog(a1, "Il tuo tempo di gioco è stato: " + respGet.readEntity(String.class), "TEMPO DI GIOCO TOTALE:", JOptionPane.CLOSED_OPTION);
+       JOptionPane.showConfirmDialog(a1, "Il tuo tempo di gioco è stato: " + respGet.readEntity(String.class), "TEMPO DI GIOCO TOTALE", JOptionPane.CLOSED_OPTION);
     }
 }
