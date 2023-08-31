@@ -5,26 +5,23 @@
  */
 package di.uniba.map.b.adventure;
 
-import di.uniba.map.b.adventure.games.EnchantedForest;
 import di.uniba.map.b.adventure.parser.DatabaseTime;
 import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.parser.Parser;
 import di.uniba.map.b.adventure.parser.ParserOutput;
 import di.uniba.map.b.adventure.rest.RestWeather;
-import di.uniba.map.b.adventure.rest.TimeService;
 import di.uniba.map.b.adventure.type.CommandType;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.sql.SQLException;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ws.rs.core.UriBuilder;
-import org.glassfish.grizzly.http.server.HttpServer;
-import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
-import org.glassfish.jersey.server.ResourceConfig;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * ATTENZIONE: l'Engine è molto spartano, in realtà demanda la logica alla
@@ -54,64 +51,79 @@ public class Engine {
         }
     }
 
-    public void execute() throws SQLException {
+    public void execute(JTextField f1, JTextArea a1, JButton b1) throws SQLException {
         GameTimer gameTimer = new GameTimer();
         Thread timerThread = new Thread(gameTimer);
         timerThread.start();
-        DatabaseTime.Time();
-        System.out.println("================================");
-        System.out.println("* ENCHANTED FOREST *"); 
-        System.out.println("================================");
-        System.out.println("\n\n-- INTRODUZIONE --\n");
-        RestWeather.clientWeather();
-        System.out.println("Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori.\n"
+        DatabaseTime.dbTime();
+        a1.setText("======================\n"
+                + "* ENCHANTED FOREST *\n"
+                + "======================\n"
+                + "------- INTRODUZIONE -------\n".trim());
+        a1.append("\n" + RestWeather.clientWeather().trim());
+        a1.append("\n" + "Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori\n"
                 + "Sei molto contrario, avresti preferito rimanere nella tua città con i tuoi amici, invece ti ritrovi in un luogo\n"
-                + "sperduto dove nessun oggetto tecnologico funziona. Con questi pensieri in mente, ti rendi conto che siete arrivati\n"
-                + "al luogo della villeggiatura. Intravedi in lontananza la cassettina dove passerete questo mese di vacanza. Arrivato,\n"
-                + "sistemi la valigia e, spinto dai tuoi genitori, decidi di inoltrarti nel bosco per esplorarlo. Entrato nel bosco vedi\n"
-                + "la fitta vegetazione e osservi gli scoiattolini che gironzolano tra gli alberi. Ti stai annoiando a morte.\n"
-                + "All'improvviso senti uno strano rumore provenire dalla tua sinistra, voltandoti noti una strana crepa insita in alcune rocce.\n"
-                + "Ti ci avvicini e con sorpresa noti che la crepa è sufficientemente grande per poterci passare attraverso.\n"
-                + "Non ci pensi due volte. Ti ritrovi all'interno di una caverna. Purtroppo è un lungo completamento oscuro quindi\n"
-                + "non riesce a intravedere niente. Cerchi di fare qualche passo ma come una \"pera cotta\" cadi a terra... Sei svenuto...\n"
-                + "Dopo un po' di tempo ti risvegli e sei completamente indolenzito dalla caduta. Preso dal dolore non noti che non ti trovi\n"
-                + "più all'interno della caverna ma sei stato trasportato all'interno di un bosco. Dopo un po' noti il cambio di paesaggio,\n"
-                + "non capendo come tu ci sia finito, decidi comunque di dare un'occhiata intorno...\n\n");
-        System.out.println(game.getCurrentRoom().getName());
-        System.out.println("================================================");
-        System.out.println(game.getCurrentRoom().getDescription());
-        System.out.println();
-        Scanner scanner = new Scanner(System.in);
-        while (scanner.hasNextLine()) {
-            String command = scanner.nextLine();
+                + "sperduto dove nessun oggetto tecnologico funziona\n"
+                + "Con questi pensieri in mente, ti rendi conto che siete arrivati al luogo della villeggiatura\n"
+                + "Intravedi in lontananza la cassettina dove passerete questo mese di vacanza\n"
+                + "Arrivato,sistemi la valigia e, spinto dai tuoi genitori, decidi di inoltrarti nel bosco per esplorarlo\n"
+                + "Entrato nel bosco vedi la fitta vegetazione e osservi gli scoiattolini che gironzolano tra gli alberi\n"
+                + "Ti stai annoiando a morte\n"
+                + "All'improvviso senti uno strano rumore provenire dalla tua sinistra, voltandoti noti una strana crepa insita in alcune rocce\n"
+                + "Ti ci avvicini e con sorpresa noti che la crepa è sufficientemente grande per poterci passare attraverso\n"
+                + "Non ci pensi due volte\n"
+                + "Ti ritrovi all'interno di una caverna. Purtroppo è un lungo completamento oscuro quindi non riesci a intravedere niente\n"
+                + "Cerchi di fare qualche passo ma come una \"pera cotta\" cadi a terra!Sei svenuto!\n"
+                + "Dopo un po' di tempo ti risvegli e sei completamente indolenzito dalla caduta\n"
+                + "Preso dal dolore non noti che non ti trovi più all'interno della caverna ma sei stato trasportato all'interno di un bosco\n"
+                + "Dopo un po' noti il cambio di paesaggio,non capendo come tu ci sia finito, decidi comunque di dare un'occhiata intorno!\n".trim());
+        a1.append("\n\n" + game.getCurrentRoom().getName());
+        a1.append("\n" + "================================================");
+        a1.append("\n" + game.getCurrentRoom().getDescription().trim());
+        a1.append("\n" + "                                                          \n".trim());
+        
+        KeyListener k;
+        k = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent ke) {
+               
+            }
+
+            @Override
+            public void keyPressed(KeyEvent ke) {
+               
+            }
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                if(ke.getKeyCode() == KeyEvent.VK_ENTER){
+                    b1.doClick();
+                }
+            }
+        };
+
+        f1.addKeyListener(k);
+
+
+        ActionListener l;
+        l = (ActionEvent e) -> {
+            a1.append("\n\n" + f1.getText());
+            String command = f1.getText();
+            f1.setText("");
             ParserOutput p = parser.parse(command, game.getCommands(), game.getCurrentRoom().getObjects(), game.getInventory());
             if (p == null || p.getCommand() == null) {
-                System.out.println("Non capisco quello che mi vuoi dire.");
+                a1.append("\n" + "Non capisco quello che mi vuoi dire.");
             } else if (p.getCommand() != null && p.getCommand().getType() == CommandType.END) {
-                System.out.println("Addio!");
-                break;
+                a1.append("\n" + "Addio!");
+                System.exit(0);
             } else {
-                game.nextMove(p, System.out);
-                System.out.println();
+                game.nextMove(p, a1);
             }
-        }
+        };
+        b1.addActionListener(l);
+        
+        
+
     }
 
-    /**
-     * @param args the command line arguments
-     * @throws java.sql.SQLException
-     */
-    public static void main(String[] args) throws SQLException {
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(4321).build();
-        ResourceConfig config = new ResourceConfig(TimeService.class);
-        HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
-        try {
-            server.start();
-            Engine engine = new Engine(new EnchantedForest());
-            engine.execute();
-            server.shutdown();
-        } catch (IOException ex) {
-            Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 }

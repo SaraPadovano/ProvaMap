@@ -17,9 +17,9 @@ import di.uniba.map.b.adventure.type.Command;
 import di.uniba.map.b.adventure.type.CommandType;
 import di.uniba.map.b.adventure.type.Monster;
 import di.uniba.map.b.adventure.type.Room;
-import java.io.PrintStream;
 import java.sql.SQLException;
 import java.util.Iterator;
+import javax.swing.JTextArea;
 
 /**
  * ATTENZIONE: La descrizione del gioco è fatta in modo che qualsiasi gioco
@@ -87,7 +87,7 @@ public class EnchantedForest extends GameDescription {
 
         //obejcts
         WriteFile.writeObjFile();
-        
+
         AdvObject sword = new AdvObject(1, "spada", LoadFile.readObjectFile(1));
         getInventory().add(sword);
         sword.setAlias(new String[]{"spadone", "lama", "arma"});
@@ -197,10 +197,9 @@ public class EnchantedForest extends GameDescription {
         setCurrentRoom(entrataBosco);
     }
 
-    @Override
-    public void nextMove(ParserOutput p, PrintStream out) {
+    public void nextMove(ParserOutput p, JTextArea a1) {
         if (p.getCommand() == null) {
-            out.println("Non ho capito cosa devo fare! Prova con un altro comando.");
+            a1.append("\n" + "Non ho capito cosa devo fare! Prova con un altro comando".trim());
         } else {
 //move
             boolean noroom = false;
@@ -251,13 +250,13 @@ public class EnchantedForest extends GameDescription {
                     noroom = true;
                 }
             } else if (p.getCommand().getType() == CommandType.INVENTORY) {
-                out.println("Nel tuo inventario ci sono:");
+                a1.append("\n" + "Nel tuo inventario ci sono:".trim());
                 for (AdvObject o : getInventory()) {
-                    out.println(o.getName() + ": " + o.getDescription());
+                    a1.append("\n" + o.getName() + ": " + o.getDescription().trim());
                 }
             } else if (p.getCommand().getType() == CommandType.LOOK_AT) {
                 if (getCurrentRoom().getLook() != null) {
-                    out.println(getCurrentRoom().getLook());
+                    a1.append("\n" + getCurrentRoom().getLook());
                     if (getCurrentRoom().getName().equals("Alfheim.")) {
                         if (looked != true) {
                             getInventory().add(getCurrentRoom().getMonster().getDropObject());
@@ -265,50 +264,51 @@ public class EnchantedForest extends GameDescription {
                         }
                     }
                 } else {
-                    out.println("Non c'è niente di interessante qui.");
+                    a1.append("\n" + "Non c'è niente di interessante qui.");
                 }
-            }else if(p.getCommand().getType() == CommandType.TIME){
-                     out.println( "Il tuo tempo di gioco corrente è : " +  GameTimer.getTotalGameTime()/1000);
-            }else if (p.getCommand().getType() == CommandType.MONSTER) {
+            } else if (p.getCommand().getType() == CommandType.TIME) {
+                String timeCurrent = String.valueOf(GameTimer.getTotalGameTime() / 1000);
+                a1.append("\n" + "Il tuo tempo di gioco corrente è : " + timeCurrent);
+            } else if (p.getCommand().getType() == CommandType.MONSTER) {
                 if (getCurrentRoom().getMonster() != null) {
-                    out.println(getCurrentRoom().getMonster().getDescription());
+                    a1.append("\n" + getCurrentRoom().getMonster().getDescription().trim());
                 }
             } else if (p.getCommand().getType() == CommandType.PICK_UP) {
                 if (p.getObject() != null) {
                     if (p.getObject().isPickupable()) {
                         getInventory().add(p.getObject());
                         getCurrentRoom().getObjects().remove(p.getObject());
-                        out.println("Hai raccolto: " + p.getObject().getDescription());
+                        a1.append("\n" + "Hai raccolto: " + p.getObject().getDescription().trim());
                     } else {
-                        out.println("Non puoi raccogliere questo oggetto.");
+                        a1.append("\n" + "Non puoi raccogliere questo oggetto.".trim());
                     }
                 } else {
-                    out.println("Non c'è niente da raccogliere qui.");
+                    a1.append("\n" + "Non c'è niente da raccogliere qui.".trim());
                 }
             } else if (p.getCommand().getType() == CommandType.ATTACK) {
                 try {
                     if (p.getInvObject().getName().equals("spada")) {
                         if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
                             if (getCurrentRoom().getMonster().getId() == 1 || getCurrentRoom().getMonster().getId() == 6) {
-                                out.println("Congratulazioni hai sconfitto il mostro!!! Non sei così incapace come pensavo!");
+                                a1.append("\n" + "Congratulazioni hai sconfitto il mostro!!! Non sei così incapace come pensavo!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
-                                out.println("Hai conquistato un nuovo oggetto che ti potrà aiutare a sconfiggere i futuri mostri!");
+                                a1.append("\n" + "Hai conquistato un nuovo oggetto che ti potrà aiutare a sconfiggere i futuri mostri!".trim());
                                 if (getCurrentRoom().getMonster().getId() == 1) {
                                     getCurrentRoom().getNorth().setVisible(true);
                                 }
                             } else {
-                                out.println("La spada non è efficace in questo caso. Riprova!");
+                                a1.append("\n" + "La spada non è efficace in questo caso. Riprova!".trim());
                             }
                         } else {
-                            out.println("Non c'è niente da attaccare in questo posto... a parte te stesso!");
+                            a1.append("\n" + "Non c'è niente da attaccare in questo posto... a parte te stesso!".trim());
                         }
                     } else {
-                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
+                        a1.append("\n" + "Non puoi attaccare con quest'oggetto!".trim());
                     }
                 } catch (Exception NullPointerException) {
                     if (p.getInvObject() == null) {
-                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
+                        a1.append("\n" + "Non puoi attaccare con quest'oggetto!".trim());
                     }
                 }
             } else if (p.getCommand().getType() == CommandType.USE) {
@@ -322,7 +322,6 @@ public class EnchantedForest extends GameDescription {
                             while (it.hasNext()) {
                                 AdvObject next = it.next();
                                 if (next.getName().equals("veleno")) {
-                                    out.println("veleno");
                                     findPoison = true;
                                 }
                                 if (next.getName().equals("fiala del fulmine")) {
@@ -333,12 +332,12 @@ public class EnchantedForest extends GameDescription {
                                 }
                             }
                             if (getCurrentRoom().getMonster().getId() == 3 && findPoison == true) {
-                                out.println("Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
+                                a1.append("\n" + "Hai deciso di uccidere il Treant: ricorda, le tue scelte avranno delle gravi consequenze.");
                                 getCurrentRoom().getMonster().setAlive(false);
                                 setCurrentRoom(getCurrentRoom().getEast().getEast().getEast().getSouth().getSouth().getWest());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getCurrentRoom().getWest().setVisible(true);
-                                out.println("Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
+                                a1.append("\n" + "Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
                                 Iterator<AdvObject> re = getInventory().iterator();
 
                                 while (re.hasNext()) {
@@ -350,10 +349,10 @@ public class EnchantedForest extends GameDescription {
                                 }
                             }
                             if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true) {
-                                out.println("Congratulazioni, hai ucciso il Merrow!");
+                                a1.append("\n" + "Congratulazioni, hai ucciso il Merrow!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
-                                out.println("Hai ottenuto un altro oggetto all'interno dell'inventario!");
+                                a1.append("\n" + "Hai ottenuto un altro oggetto all'interno dell'inventario!".trim());
                                 getCurrentRoom().getWest().setVisible(true);
                                 getCurrentRoom().getWest().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
@@ -367,7 +366,7 @@ public class EnchantedForest extends GameDescription {
                                 }
                             }
                             if (getCurrentRoom().getMonster().getId() == 2) {
-                                out.println("Congratulazioni, hai ucciso il cumulo strisciante!");
+                                a1.append("\n" + "Congratulazioni, hai ucciso il cumulo strisciante!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
@@ -380,18 +379,19 @@ public class EnchantedForest extends GameDescription {
                                 }
                             }
                             if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true) {
-                                if(getCurrentRoom().getEast().getMonster().getIsAlive() == true) 
-                                    endGood(out);
-                                else
-                                    endBad(out);
+                                if (getCurrentRoom().getEast().getMonster().getIsAlive() == true) {
+                                    endGood(a1);
+                                } else {
+                                    endBad(a1);
+                                }
                             }
                         }
                     } else {
-                        out.println("Non puoi usare questo oggetto!");
+                        a1.append("\n" + "Non puoi usare questo oggetto!".trim());
                     }
                 } catch (Exception NullPointerException) {
                     if (p.getInvObject() == null) {
-                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
+                        a1.append("\n" + "Non puoi attaccare con quest'oggetto!".trim());
                     }
                 }
             } else if (p.getCommand().getType() == CommandType.GIVE) {
@@ -412,10 +412,10 @@ public class EnchantedForest extends GameDescription {
                                 }
                             }
                             if (getCurrentRoom().getMonster().getId() == 3 && findAcorn == true) {
-                                out.println("Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
+                                a1.append("\n" + "Hai scelto di curare il Treant, le tue gesta saranno riconosciute in seguito.");
                                 setCurrentRoom(getCurrentRoom().getEast().getEast().getEast().getSouth().getSouth().getWest());
                                 getCurrentRoom().getMonster().setAlive(true);
-                                out.println("Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.\n\n");
+                                a1.append("\n" + "Sotto consiglio del Treant, ti dirigi verso la Driade. Appena arrivato, ti si para di fronte una bellissima donna dall'aspetto fatato, che ti ringrazia per averla salvata.");
                                 getCurrentRoom().getWest().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
@@ -429,7 +429,7 @@ public class EnchantedForest extends GameDescription {
                             }
                             if (getCurrentRoom().getMonster().getId() == 5 && findCoin == true) {
                                 getCurrentRoom().getMonster().setAlive(false);
-                                out.println("Davanti a te si apre un portale per gli abissi del lago.");
+                                a1.append("\n" + "Davanti a te si apre un portale per gli abissi del lago.".trim());
                                 getCurrentRoom().getNorth().setVisible(true);
                                 Iterator<AdvObject> re = getInventory().iterator();
 
@@ -445,7 +445,7 @@ public class EnchantedForest extends GameDescription {
                     }
                 } catch (Exception NullPointerException) {
                     if (p.getInvObject() == null) {
-                        out.println("Non puoi attaccare con quest'oggetto!\n\n");
+                        a1.append("\n" + "Non puoi attaccare con quest'oggetto!".trim());
                     }
                 }
             } else if (p.getCommand().getType() == CommandType.OPEN) {
@@ -454,31 +454,31 @@ public class EnchantedForest extends GameDescription {
                  * Potrebbe non esssere la soluzione ottimale.
                  */
                 if (p.getObject() == null && p.getInvObject() == null) {
-                    out.println("Non c'è niente da aprire qui.");
+                    a1.append("\n" + "Non c'è niente da aprire qui".trim());
                 } else {
                     if (p.getObject() != null) {
                         if (p.getObject().isOpenable() && p.getObject().isOpen() == false) {
                             if (p.getObject() instanceof AdvObjectContainer) {
-                                out.println("Hai aperto: " + p.getObject().getName());
+                                a1.append("\n" + "Hai aperto: " + p.getObject().getName().trim());
                                 AdvObjectContainer c = (AdvObjectContainer) p.getObject();
                                 if (!c.getList().isEmpty()) {
-                                    out.print(c.getName() + " contiene:");
+                                    a1.append("\n" + c.getName() + " contiene:".trim());
                                     Iterator<AdvObject> it = c.getList().iterator();
                                     while (it.hasNext()) {
                                         AdvObject next = it.next();
                                         getCurrentRoom().getObjects().add(next);
-                                        out.print(" " + next.getName());
+                                        a1.append("\n" + " " + next.getName().trim());
                                         it.remove();
                                     }
-                                    out.println();
+                                    a1.append("\n");
                                 }
                                 p.getObject().setOpen(true);
                             } else {
-                                out.println("Hai aperto: " + p.getObject().getName());
+                                a1.append("\n" + "Hai aperto: " + p.getObject().getName().trim());
                                 p.getObject().setOpen(true);
                             }
                         } else {
-                            out.println("Non puoi aprire questo oggetto.");
+                            a1.append("\n" + "Non puoi aprire questo oggetto".trim());
                         }
                     }
                     if (p.getInvObject() != null) {
@@ -486,58 +486,71 @@ public class EnchantedForest extends GameDescription {
                             if (p.getInvObject() instanceof AdvObjectContainer) {
                                 AdvObjectContainer c = (AdvObjectContainer) p.getInvObject();
                                 if (!c.getList().isEmpty()) {
-                                    out.print(c.getName() + " contiene:");
+                                    a1.append("\n" + c.getName() + " contiene:".trim());
                                     Iterator<AdvObject> it = c.getList().iterator();
                                     while (it.hasNext()) {
                                         AdvObject next = it.next();
                                         getInventory().add(next);
-                                        out.print(" " + next.getName());
+                                        a1.append("\n" + " " + next.getName().trim());
                                         it.remove();
                                     }
-                                    out.println();
+                                    a1.append("\n");
                                 }
                                 p.getInvObject().setOpen(true);
                             } else {
                                 p.getInvObject().setOpen(true);
                             }
-                            out.println("Hai aperto nel tuo inventario: " + p.getInvObject().getName());
+                            a1.append("\n" + "Hai aperto nel tuo inventario: " + p.getInvObject().getName().trim());
                         } else {
-                            out.println("Non puoi aprire questo oggetto.");
+                            a1.append("\n" + "Non puoi aprire questo oggetto.".trim());
                         }
                     }
                 }
             }
             if (noroom) {
-                out.println("Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...");
+                a1.append("\n" + "Da quella parte non si può andare c'è un muro!\nNon hai ancora acquisito i poteri per oltrepassare i muri...".trim());
             } else if (visible == false) {
-                out.println("Non hai ancora le giuste capacità per accedere a questa parte del mondo...");
+                a1.append("\n" + "Non hai ancora le giuste capacità per accedere a questa parte del mondo...".trim());
             } else if (move) {
-                out.println(getCurrentRoom().getName());
-                out.println("================================================");
-                out.println(getCurrentRoom().getDescription());
+                a1.append("\n" + getCurrentRoom().getName().trim());
+                a1.append("\n" + "================================================".trim());
+                a1.append("\n" + getCurrentRoom().getDescription().trim());
             }
         }
     }
 
-    private void endGood(PrintStream out) throws SQLException {
-        out.println("Congratulazioni, sei riuscito ad uccidere il Mind Flayer.\nAll'improvviso ti senti stordito e perdi i sensi. Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa. Il sole è ormai calato e intorno a te si sta facendo sempre più buio.\n"
-                + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza. Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans. Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\nCon questi pensieri,"
-                + " ritorni a casa per goderti la tua vacanza.\nStasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
-        GameTimer.stopTimer(); 
-        int elapsedGameTime =(int) GameTimer.getTotalGameTime();
-        RestClientTime.clientTime(elapsedGameTime/1000);
+    private void endGood(JTextArea a1) throws SQLException {
+        a1.append("\n" + "Congratulazioni, sei riuscito ad uccidere il Mind Flayer. All'improvviso ti senti stordito e perdi i sensi.".trim());
+        a1.append("\n" + "Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa.".trim());
+        a1.append("\n" + "Il sole è ormai calato e intorno a te si sta facendo sempre più buio.".trim());
+        a1.append("\n" + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza.".trim());
+        a1.append("\n" + "Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans.".trim());
+        a1.append("\n" + "Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...".trim());
+        a1.append("\n" + "Con questi pensieri ritorni a casa per goderti la tua vacanza.".trim());
+        a1.append("\n" + "Stasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
+        a1.append("\n\n" + "FINE.");
+        GameTimer.stopTimer();
+        int elapsedGameTime = (int) GameTimer.getTotalGameTime();
+        RestClientTime.clientTime(elapsedGameTime / 1000, a1);
         System.exit(0);
     }
 
-    private void endBad(PrintStream out) throws SQLException {
-        out.println("Hai deciso di attaccare il Mind Flayer, ma, nonostante l'oggetto potente che hai utilizzato, sei riuscito soltanto a stordirlo. Continui ad attaccarlo, ma sembra tutto vano.\nAll'improvviso il Mind Flayer decide di contrattaccare e tu sei troppo debole per resistere.\n"
-                + "Il Mind Flayer prima di darti il colpo di grazia ti dice:\"Posso essere sconfitto solo da qualcuno che ha compiuto buone azioni. Gli attacchi vili non hanno alcun effetto su una creatura altrettanto vile quanto me. Avresti potuto dare quella ghianda...\""
-                + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici. Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.\nInizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più."
-                + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità. In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini."
-                + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza. Resterai qui con me per l'eternità.\"\nMagari in un'altra vita ci penserai due volte a compiere determinate azioni...");
-        GameTimer.stopTimer(); 
-        int elapsedGameTime =(int) GameTimer.getTotalGameTime();
-       RestClientTime.clientTime(elapsedGameTime/1000);
+    private void endBad(JTextArea a1) throws SQLException {
+        a1.append("\n" + "Hai deciso di attaccare il Mind Flayer, ma, nonostante l'oggetto potente che hai utilizzato, sei riuscito soltanto a stordirlo.".trim());
+        a1.append("\n" + "Continui ad attaccarlo, ma sembra tutto vano. All'improvviso il Mind Flayer decide di contrattaccare e tu sei troppo debole per resistere.".trim());
+        a1.append("\n" + "Il Mind Flayer prima di darti il colpo di grazia ti dice:\"Posso essere sconfitto solo da qualcuno che ha compiuto buone azioni.".trim());
+        a1.append("\n" + "Gli attacchi vili non hanno alcun effetto su una creatura altrettanto vile quanto me. Avresti potuto dare quella ghianda...\"".trim());
+        a1.append("\n" + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici.".trim());
+        a1.append("\n" + "Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.".trim());
+        a1.append("\n" + "Inizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più.".trim());
+        a1.append("\n" + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità.".trim());
+        a1.append("\n" + "In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini.".trim());
+        a1.append("\n" + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza.".trim());
+        a1.append("\n" + "Resterai qui con me per l'eternità.\" Magari in un'altra vita ci penserai due volte a compiere determinate azioni...".trim());
+        a1.append("\n\n" + "FINE.");
+        GameTimer.stopTimer();
+        int elapsedGameTime = (int) GameTimer.getTotalGameTime();
+        RestClientTime.clientTime(elapsedGameTime / 1000, a1);
         System.exit(0);
     }
 }

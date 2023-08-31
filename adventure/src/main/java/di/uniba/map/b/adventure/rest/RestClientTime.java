@@ -5,9 +5,10 @@
 package di.uniba.map.b.adventure.rest;
 
 import com.google.gson.Gson;
-import di.uniba.map.b.adventure.parser.GameTimer;
 import di.uniba.map.b.adventure.type.Time;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -20,7 +21,7 @@ import javax.ws.rs.core.Response;
  * @author acer
  */
 public class RestClientTime {
-    public static void clientTime(int elapsedGameTime) throws SQLException{
+     public static void clientTime(int elapsedGameTime,JTextArea a1) throws SQLException{
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("http://localhost:4321");
 
@@ -30,6 +31,6 @@ public class RestClientTime {
                 .put(Entity.entity(gson.toJson(tempo), MediaType.APPLICATION_JSON));
         
         Response respGet = target.path("time").request(MediaType.APPLICATION_JSON).get();
-        System.out.println("Il tuo tempo di gioco è stato: " + respGet.readEntity(String.class));
+       JOptionPane.showConfirmDialog(a1, "Il tuo tempo di gioco è stato: " + respGet.readEntity(String.class), "TEMPO DI GIOCO TOTALE:", JOptionPane.CLOSED_OPTION);
     }
 }
