@@ -59,8 +59,8 @@ public class Engine {
         a1.setText("======================\n"
                 + "* ENCHANTED FOREST *\n"
                 + "======================\n"
-                + "------- INTRODUZIONE -------\n".trim());
-        a1.append("\n" + RestWeather.clientWeather().trim());
+                + "------- INTRODUZIONE -------\n");
+        a1.append("\n" + RestWeather.clientWeather());
         a1.append("\n" + "Ti trovi in macchina con la tua famiglia. Sei costretto ad andare all'ennesima vacanza con i tuoi genitori\n"
                 + "Sei molto contrario, avresti preferito rimanere nella tua città con i tuoi amici, invece ti ritrovi in un luogo\n"
                 + "sperduto dove nessun oggetto tecnologico funziona\n"
@@ -76,11 +76,11 @@ public class Engine {
                 + "Cerchi di fare qualche passo ma come una \"pera cotta\" cadi a terra!Sei svenuto!\n"
                 + "Dopo un po' di tempo ti risvegli e sei completamente indolenzito dalla caduta\n"
                 + "Preso dal dolore non noti che non ti trovi più all'interno della caverna ma sei stato trasportato all'interno di un bosco\n"
-                + "Dopo un po' noti il cambio di paesaggio,non capendo come tu ci sia finito, decidi comunque di dare un'occhiata intorno!\n".trim());
+                + "Dopo un po' noti il cambio di paesaggio,non capendo come tu ci sia finito, decidi comunque di dare un'occhiata intorno!\n");
         a1.append("\n\n" + game.getCurrentRoom().getName());
         a1.append("\n" + "================================================");
         a1.append("\n" + game.getCurrentRoom().getDescription().trim());
-        a1.append("\n" + "                                                          \n".trim());
+        a1.append("\n" + "                                                          \n");
         
         KeyListener k;
         k = new KeyListener() {
