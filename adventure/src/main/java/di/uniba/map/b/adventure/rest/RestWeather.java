@@ -29,34 +29,36 @@ public class RestWeather {
          return risposta;
    }
     
-    private static void getMessaggioMeteo(String weather){
+    private static String getMessaggioMeteo(String weather){
         if(weather.contains("Thunderstorm")){
-            System.out.println("La tua avventura inizia in una giornata tempestosa!\n");
+           return("La tua avventura inizia in una giornata tempestosa!");
         } else if(weather.contains("Drizzle")){
-            System.out.println("La tua avventura inizia in una giornata un po' piovosa!\n");
+             return("La tua avventura inizia in una giornata un po' piovosa!");
         } else if(weather.contains("Rain")){
-            System.out.println("La tua avventura inizia in una giornata piovosa!\n");
+            return("La tua avventura inizia in una giornata piovosa!");
         } else if(weather.contains("Snow")){
-            System.out.println("La tua avventura inizia in una giornata nevosa!\n");
+             return("La tua avventura inizia in una giornata nevosa!");
         } else if(weather.contains("Mist") || weather.contains("Haze") || weather.contains("Fog")){
-            System.out.println("La tua avventura inizia in una giornata piena di nebbia!\n");
+             return("La tua avventura inizia in una giornata piena di nebbia!");
         } else if(weather.contains("Smoke") || weather.contains("Dust") || weather.contains("Sand") || weather.contains("Ash")){
-            System.out.println("La tua avventura inizia in una giornata in cui, un po' per il troppo inquinamento,\n"+
-               "un po' per la presenza di polveri naturali nell'aria, il sole non riesce più a splendere come faceva qualche giorno fa!\n");
+             return("La tua avventura inizia in una giornata in cui, un po' per il troppo inquinamento"
+              +"un po' per la presenza di polveri naturali nell'aria, il sole non riesce più a splendere come faceva qualche giorno fa!");
         } else if(weather.contains("Squall")){
-            System.out.println("La tua avventura inizia in una giornta burrascosa!\n");
+             return("La tua avventura inizia in una giornta burrascosa!");
         } else if(weather.contains("Tornado")){
-            System.out.println("La tua avventura inizia in una giornata non proprio soleggiata, vista l'allerta per possibili tornado"+
-                    "emanata qualche ora fa!\n");
+            return("La tua avventura inizia in una giornata non proprio soleggiata, vista l'allerta per possibili tornado"
+                   +"emanata qualche ora fa!");
         } else if(weather.contains("Clear")){
-            System.out.println("La tua avventura inizia in una bella giornata soleggiata!\n");
+             return("La tua avventura inizia in una bella giornata soleggiata!");
         }else if(weather.contains("Clouds")){
-            System.out.println("La tua avventura inizia in una giornata grigia e nuvolosa!\n");
+           return("La tua avventura inizia in una giornata grigia e nuvolosa!");
         }
+        return "La tua avventura inizia in una giornata anonima";
     }
     
-    public static void clientWeather(){
+    public static String clientWeather(){
         String weather = getWeatherByCity("Bari");
-        getMessaggioMeteo(weather);
+        String meteo = getMessaggioMeteo(weather);
+        return meteo;
     }
 }

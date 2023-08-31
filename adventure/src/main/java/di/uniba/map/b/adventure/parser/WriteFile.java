@@ -27,7 +27,7 @@ public class WriteFile {
         + "Era un oggetto riservato a coloro che avevano la conoscenza e il coraggio di maneggiare l'essenza del fuoco, pronti ad utilizzarla per scopi nobili o distruttivi.",
         "La fiala antica non era solo un semplice contenitore, ma un conduttore dell'essenza del fulmine stessa."
         + "Chiunque la possedesse avrebbe potuto canalizzare l'energia elettrica e utilizzarla per scopi creativi o distruttivi. Era un oggetto riservato a coloro che avevano la conoscenza e il coraggio di manipolare l'essenza del fulmine, pronti ad affrontare le sfide e i pericoli che essa comportava.",
-        "La moneta sorprendentemente luccicante donata dal Treant non sembra una di quelle solite monete viste nel mondo normale."
+        "La moneta sorprendentemente luccicante donata dalla Driade non sembra una di quelle solite monete viste nel mondo normale."
         + "Essa infatti non ha inciso alcun prezzo di riferimento ma è finemente decorata da entrambi i lati con decorazioni che richiamano paesaggi marini da un lato e boschivi dall'altro.",
         "Quest'oggetto presenta le stesse caratteristiche di una radiolina, ma non sembrano esserci stazioni attive nella zona."
         + "Ha una forma piccola, che la rende tascabile. E' forse l'oggetto più adorabile che tu abbia mai visto. La sua utilità è ancora sconosciuta."
