@@ -347,9 +347,7 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
-                            } else{
-                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
-                            }
+                            } 
                             if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true &&  p.getInvObject().getName().equals("fiala del fulmine")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il Merrow!".trim());
                                 getCurrentRoom().getMonster().setAlive(false);
@@ -366,8 +364,6 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
-                            }else{
-                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
                             if (getCurrentRoom().getMonster().getId() == 2 && p.getInvObject().getName().equals("fiala del fuoco")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il cumulo strisciante!".trim());
@@ -381,8 +377,6 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
-                            }else{
-                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
                             if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true && p.getInvObject().getName().equals("radio")) {
                                 if (getCurrentRoom().getEast().getMonster().getIsAlive() == true) {
@@ -390,8 +384,6 @@ public class EnchantedForest extends GameDescription {
                                 } else {
                                     endBad(a1);
                                 }
-                            }else{
-                                a1.append("\n"+"Non puoi usare quest'oggetto contro questo mostro");
                             }
                         }
                     } else {
