@@ -5,6 +5,8 @@
 package di.uniba.map.b.adventure.swing;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,8 +34,8 @@ public class Start extends JFrame {
        fr = new JFrame();
         fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
-        
-            image=new ImageIcon(getClass().getResource("forest.jpg"));
+       
+            image=new ImageIcon("./resources/forest.jpg");
             displayField = new JLabel(image);
             
         panel.add(displayField);
