@@ -103,8 +103,6 @@ public final class AdventureSwing extends javax.swing.JFrame {
 
         jButton1.setText("Ok");
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setMaximumSize(new java.awt.Dimension(72, 23));
-        jButton1.setMinimumSize(new java.awt.Dimension(72, 23));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
