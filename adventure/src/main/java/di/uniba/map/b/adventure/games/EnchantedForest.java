@@ -339,15 +339,13 @@ public class EnchantedForest extends GameDescription {
                                 getCurrentRoom().getWest().setVisible(true);
                                 a1.append("\n" + "Sotto consiglio del Treant, ti dirigi verso la Driade per assistere alla sua morte. Una volta sul luogo, noti la Driade decomporsi in tante piccole foglie dorate e scomparire trasportata dal vento.\n\n");
                                 Iterator<AdvObject> re = getInventory().iterator();
-
                                 while (re.hasNext()) {
                                     AdvObject next = re.next();
                                     if (next.getName().equals("veleno")) {
                                         getInventory().remove(next);
                                     }
-
-                                }
-                            } else if(getCurrentRoom().getMonster().getId() == 3 && (p.getInvObject().getName().equals("fiala del fuoco") ||  p.getInvObject().getName().equals("fiala del fulmine") ||  p.getInvObject().getName().equals("radio"))){
+                            }
+                            }else if(getCurrentRoom().getMonster().getId() == 3 && (p.getInvObject().getName().equals("fiala del fuoco") ||  p.getInvObject().getName().equals("fiala del fulmine") ||  p.getInvObject().getName().equals("radio"))){
                                 a1.append("\n"+"In questa circostanza potresti pensare a qualcosa di meglio");
                             }
                             if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true &&  p.getInvObject().getName().equals("fiala del fulmine")) {
