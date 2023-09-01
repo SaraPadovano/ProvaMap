@@ -5,8 +5,6 @@
 package di.uniba.map.b.adventure.swing;
 
 import java.awt.Color;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
