@@ -540,6 +540,14 @@ public class EnchantedForest extends GameDescription {
         RestClientTime.clientTime(elapsedGameTime / 1000, a1);
         System.exit(0);
     }
+    
+    interface Division {
+        int operation(int a, int b);
+    }
+    
+    private int operate (int a, int b, Division d){
+        return d.operation(a, b);
+    }
 
     private void endBad(JTextArea a1) throws SQLException {
         a1.append("\n" + "Hai deciso di attaccare il Mind Flayer, ma, nonostante l'oggetto potente che hai utilizzato, sei riuscito soltanto a stordirlo.\n"
@@ -556,7 +564,8 @@ public class EnchantedForest extends GameDescription {
         a1.append("\n\n" + "FINE.");
         GameTimer.stopTimer();
         int elapsedGameTime = (int) GameTimer.getTotalGameTime();
-        RestClientTime.clientTime(elapsedGameTime / 1000, a1);
+        Division division = (a, b) -> a/b;
+        RestClientTime.clientTime(operate(elapsedGameTime, 1000, division), a1);
         System.exit(0);
     }
 }
