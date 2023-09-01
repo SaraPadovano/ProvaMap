@@ -17,6 +17,7 @@ import di.uniba.map.b.adventure.type.Command;
 import di.uniba.map.b.adventure.type.CommandType;
 import di.uniba.map.b.adventure.type.Monster;
 import di.uniba.map.b.adventure.type.Room;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import javax.swing.JTextArea;
@@ -40,7 +41,7 @@ public class EnchantedForest extends GameDescription {
     private boolean looked = false;
 
     @Override
-    public void init() throws Exception {
+    public void init() throws IOException {
 //Commands
         Command nord = new Command(CommandType.NORD, "nord");
         nord.setAlias(new String[]{"n", "N", "Nord", "NORD"});
