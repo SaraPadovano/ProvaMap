@@ -38,6 +38,8 @@ import javax.swing.JTextArea;
  */
 public class EnchantedForest extends GameDescription {
 
+    private final int TOSECOND = 1000;
+
     private boolean looked = false;
 
     @Override
@@ -198,6 +200,12 @@ public class EnchantedForest extends GameDescription {
         setCurrentRoom(entrataBosco);
     }
 
+    @FunctionalInterface
+    interface CheckItem {
+
+        boolean check(String itemName);
+    }
+
     public void nextMove(ParserOutput p, JTextArea a1) {
         if (p.getCommand() == null) {
             a1.append("\n" + "Non ho capito cosa devo fare! Prova con un altro comando".trim());
@@ -268,7 +276,7 @@ public class EnchantedForest extends GameDescription {
                     a1.append("\n" + "Non c'è niente di interessante qui.");
                 }
             } else if (p.getCommand().getType() == CommandType.TIME) {
-                String timeCurrent = String.valueOf(GameTimer.getTotalGameTime() / 1000);
+                String timeCurrent = String.valueOf(GameTimer.getTotalGameTime() / TOSECOND);
                 a1.append("\n" + "Il tuo tempo di gioco corrente è : " + timeCurrent);
             } else if (p.getCommand().getType() == CommandType.MONSTER) {
                 if (getCurrentRoom().getMonster() != null) {
@@ -288,7 +296,8 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.ATTACK) {
                 try {
-                    if (p.getInvObject().getName().equals("spada")) {
+                    CheckItem checkCondition = itemName -> itemName.equals("spada");
+                    if (checkCondition.check(p.getInvObject().getName())) {
                         if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
                             if (getCurrentRoom().getMonster().getId() == 1 || getCurrentRoom().getMonster().getId() == 6) {
                                 a1.append("\n" + "Congratulazioni hai sconfitto il mostro!!! Non sei così incapace come pensavo!");
@@ -314,7 +323,8 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.USE) {
                 try {
-                    if (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("veleno") || p.getInvObject().getName().equals("radio")) {
+                    CheckItem checkCondition = itemName -> itemName.equals("fiala del fuoco") || itemName.equals("fiala del fulmine") || itemName.equals("veleno") || itemName.equals("radio");
+                    if (checkCondition.check(p.getInvObject().getName())) {
                         if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
                             Iterator<AdvObject> it = getInventory().iterator();
                             boolean findPoison = false;
@@ -345,11 +355,11 @@ public class EnchantedForest extends GameDescription {
                                     if (next.getName().equals("veleno")) {
                                         getInventory().remove(next);
                                     }
+                                }
+                            } else if (getCurrentRoom().getMonster().getId() == 3 && (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("radio"))) {
+                                a1.append("\n" + "In questa circostanza potresti pensare a qualcosa di meglio");
                             }
-                            }else if(getCurrentRoom().getMonster().getId() == 3 && (p.getInvObject().getName().equals("fiala del fuoco") ||  p.getInvObject().getName().equals("fiala del fulmine") ||  p.getInvObject().getName().equals("radio"))){
-                                a1.append("\n"+"In questa circostanza potresti pensare a qualcosa di meglio");
-                            }
-                            if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true &&  p.getInvObject().getName().equals("fiala del fulmine")) {
+                            if (getCurrentRoom().getMonster().getId() == 7 && findThunder == true && p.getInvObject().getName().equals("fiala del fulmine")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il Merrow!");
                                 getCurrentRoom().getMonster().setAlive(false);
                                 getInventory().add(getCurrentRoom().getMonster().getDropObject());
@@ -365,8 +375,8 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
-                            }else if(getCurrentRoom().getMonster().getId() == 7 && (p.getInvObject().getName().equals("fiala del fuoco") ||  p.getInvObject().getName().equals("veleno") ||  p.getInvObject().getName().equals("radio"))){
-                                a1.append("\n"+"In questa circostanza potresti pensare a qualcosa di meglio");
+                            } else if (getCurrentRoom().getMonster().getId() == 7 && (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("veleno") || p.getInvObject().getName().equals("radio"))) {
+                                a1.append("\n" + "In questa circostanza potresti pensare a qualcosa di meglio");
                             }
                             if (getCurrentRoom().getMonster().getId() == 2 && p.getInvObject().getName().equals("fiala del fuoco")) {
                                 a1.append("\n" + "Congratulazioni, hai ucciso il cumulo strisciante!");
@@ -380,8 +390,8 @@ public class EnchantedForest extends GameDescription {
                                     }
 
                                 }
-                            }else if(getCurrentRoom().getMonster().getId() == 2 && (p.getInvObject().getName().equals("veleno") ||  p.getInvObject().getName().equals("fiala del fulmine") ||  p.getInvObject().getName().equals("radio"))){
-                                a1.append("\n"+"In questa circostanza potresti pensare a qualcosa di meglio");
+                            } else if (getCurrentRoom().getMonster().getId() == 2 && (p.getInvObject().getName().equals("veleno") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("radio"))) {
+                                a1.append("\n" + "In questa circostanza potresti pensare a qualcosa di meglio");
                             }
                             if (getCurrentRoom().getMonster().getId() == 8 && findRadio == true && p.getInvObject().getName().equals("radio")) {
                                 if (getCurrentRoom().getEast().getMonster().getIsAlive() == true) {
@@ -389,8 +399,8 @@ public class EnchantedForest extends GameDescription {
                                 } else {
                                     endBad(a1);
                                 }
-                            }else if(getCurrentRoom().getMonster().getId() == 8 && (p.getInvObject().getName().equals("fiala del fuoco") ||  p.getInvObject().getName().equals("fiala del fulmine") ||  p.getInvObject().getName().equals("veleno"))){
-                                a1.append("\n"+"In questa circostanza potresti pensare a qualcosa di meglio");
+                            } else if (getCurrentRoom().getMonster().getId() == 8 && (p.getInvObject().getName().equals("fiala del fuoco") || p.getInvObject().getName().equals("fiala del fulmine") || p.getInvObject().getName().equals("veleno"))) {
+                                a1.append("\n" + "In questa circostanza potresti pensare a qualcosa di meglio");
                             }
                         }
                     } else {
@@ -403,7 +413,10 @@ public class EnchantedForest extends GameDescription {
                 }
             } else if (p.getCommand().getType() == CommandType.GIVE) {
                 try {
-                    if (p.getInvObject().getName().equals("moneta") || p.getInvObject().getName().equals("ghianda")) {
+                    CheckItem checkCondition = itemName -> itemName.equals("moneta") || itemName.equals("ghianda");
+
+                    if (checkCondition.check(p.getInvObject().getName())) {
+
                         if (getCurrentRoom().getMonster() != null && getCurrentRoom().getMonster().getIsAlive() == true) {
 
                             Iterator<AdvObject> it = getInventory().iterator();
@@ -526,47 +539,49 @@ public class EnchantedForest extends GameDescription {
         }
     }
 
+    interface Division {
+
+        int operation(int a, int b);
+    }
+
+    private int operate(int a, int b, Division d) {
+        return d.operation(a, b);
+    }
+
     private void endGood(JTextArea a1) throws SQLException {
         a1.append("\n" + "Congratulazioni, sei riuscito ad uccidere il Mind Flayer. All'improvviso ti senti stordito e perdi i sensi.\n"
-                 + "Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa.\n"
-                 +"Il sole è ormai calato e intorno a te si sta facendo sempre più buio.\n"
-                 + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza.\n"
-                 + "Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans.\n"
-                 + "Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\n"
-                 + "Con questi pensieri ritorni a casa per goderti la tua vacanza.\n"
-                 + "Stasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
+                + "Quando ti risvegli, ti ritrovi nella grotta in cui eri entrato poche ore fa.\n"
+                + "Il sole è ormai calato e intorno a te si sta facendo sempre più buio.\n"
+                + "Esci dalla grotta e senti qualcuno chiamare il tuo nome in lontananza.\n"
+                + "Ti senti ancora stordito dal sogno che hai fatto, però senti qualcosa nella tasca dei tuoi jeans.\n"
+                + "Controlli e tiri fuori un'adorabile radiolina. Forse non è stato proprio un sogno...\n"
+                + "Con questi pensieri ritorni a casa per goderti la tua vacanza.\n"
+                + "Stasera, tua madre ha deciso di preparare un bel piatto a base di polpo, ma tu non hai tanta fame.");
         a1.append("\n\n" + "FINE.");
         GameTimer.stopTimer();
         int elapsedGameTime = (int) GameTimer.getTotalGameTime();
-        RestClientTime.clientTime(elapsedGameTime / 1000, a1);
+        Division division = (a, b) -> a / b;
+        RestClientTime.clientTime(operate(elapsedGameTime, TOSECOND, division), a1);
         System.exit(0);
-    }
-    
-    interface Division {
-        int operation(int a, int b);
-    }
-    
-    private int operate (int a, int b, Division d){
-        return d.operation(a, b);
     }
 
     private void endBad(JTextArea a1) throws SQLException {
         a1.append("\n" + "Hai deciso di attaccare il Mind Flayer, ma, nonostante l'oggetto potente che hai utilizzato, sei riuscito soltanto a stordirlo.\n"
-                  + "Continui ad attaccarlo, ma sembra tutto vano. All'improvviso il Mind Flayer decide di contrattaccare e tu sei troppo debole per resistere.\n"
-                  + "Il Mind Flayer prima di darti il colpo di grazia ti dice:\"Posso essere sconfitto solo da qualcuno che ha compiuto buone azioni.\n"
-                  + "Gli attacchi vili non hanno alcun effetto su una creatura altrettanto vile quanto me. Avresti potuto dare quella ghianda...\"\n"
-                  + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici.\n"
-                  + "Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.\n"
-                  + "Inizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più.\n"
-                  + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità.\n"
-                  + "In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini.\n"
-                  + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza.\n"
-                  + "Resterai qui con me per l'eternità.\" Magari in un'altra vita ci penserai due volte a compiere determinate azioni...");
+                + "Continui ad attaccarlo, ma sembra tutto vano. All'improvviso il Mind Flayer decide di contrattaccare e tu sei troppo debole per resistere.\n"
+                + "Il Mind Flayer prima di darti il colpo di grazia ti dice:\"Posso essere sconfitto solo da qualcuno che ha compiuto buone azioni.\n"
+                + "Gli attacchi vili non hanno alcun effetto su una creatura altrettanto vile quanto me. Avresti potuto dare quella ghianda...\"\n"
+                + "Dopo aver detto ciò, il Mind Flayer ti fa perdere i sensi con uno dei suoi attacchi psichici.\n"
+                + "Quando ti risvegli, ti ritrovi in una cella fredda e oscura. Sei incatenato e non hai alcuna possibilità di scappare.\n"
+                + "Inizi a disperarti, quando ad una certa senti dei passi che si avvicinano sempre più.\n"
+                + "Riesci, nell'oscurità, a intravedere la figura del Mind Flayer che sogghignando ti dice:\"Volevo ucciderti, però ho pensato di essere magnanimo e renderti mio schiavo per l'eternità.\n"
+                + "In fondo chi non vorrebbe essere mio schiavo! D'ora in avanti, vivrai in questa cella e sarai costretto ad eseguire tutti i miei ordini.\n"
+                + "Sarà inutile per te scappare o chiedere pietà, perchè avendo compiuto quell'azione tanto crudele, ti sei escluso ogni possibilità di salvezza.\n"
+                + "Resterai qui con me per l'eternità.\" Magari in un'altra vita ci penserai due volte a compiere determinate azioni...");
         a1.append("\n\n" + "FINE.");
         GameTimer.stopTimer();
         int elapsedGameTime = (int) GameTimer.getTotalGameTime();
-        Division division = (a, b) -> a/b;
-        RestClientTime.clientTime(operate(elapsedGameTime, 1000, division), a1);
+        Division division = (a, b) -> a / b;
+        RestClientTime.clientTime(operate(elapsedGameTime, TOSECOND, division), a1);
         System.exit(0);
     }
 }

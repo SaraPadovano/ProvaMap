@@ -9,7 +9,9 @@ import di.uniba.map.b.adventure.Utils;
 import di.uniba.map.b.adventure.type.AdvObject;
 import di.uniba.map.b.adventure.type.Command;
 import java.util.List;
+import java.util.OptionalInt;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 /**
  *
@@ -24,21 +26,19 @@ public class Parser {
     }
 
     private int checkForCommand(String token, List<Command> commands) {
-        for (int i = 0; i < commands.size(); i++) {
-            if (commands.get(i).getName().equals(token) || commands.get(i).getAlias().contains(token)) {
-                return i;
-            } 
-        }
-        return -1;
+        OptionalInt result = IntStream.range(0, commands.size())
+                .filter(i -> commands.get(i).getName().equals(token) || commands.get(i).getAlias().contains(token))
+                .findFirst();
+
+        return result.orElse(-1);
     }
 
-    private int checkForObject(String token, List<AdvObject> obejcts) {
-        for (int i = 0; i < obejcts.size(); i++) {
-            if (obejcts.get(i).getName().equals(token) || obejcts.get(i).getAlias().contains(token)) {
-                return i;
-            }
-        }
-        return -1;
+    private int checkForObject(String token, List<AdvObject> objects) {
+        OptionalInt result = IntStream.range(0, objects.size())
+                .filter(i -> objects.get(i).getName().equals(token) || objects.get(i).getAlias().contains(token))
+                .findFirst();
+
+        return result.orElse(-1);
     }
 
     /* ATTENZIONE: il parser è implementato in modo abbastanza independete dalla lingua, ma riconosce solo 
