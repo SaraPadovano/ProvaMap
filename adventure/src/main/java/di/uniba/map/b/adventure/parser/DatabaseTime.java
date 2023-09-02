@@ -17,7 +17,7 @@ import java.sql.Statement;
  */
 
 public class DatabaseTime {
-   public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS time (playId INT PRIMARY KEY, playTime INTEGER)";
+   private static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS time (playId INT PRIMARY KEY, playTime INTEGER)";
  
     public static void dbTime() throws SQLException{
         try{
