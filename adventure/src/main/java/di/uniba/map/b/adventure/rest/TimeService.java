@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author pierpaolo
+ * @author acer
  */
 @Path("time")
 public class TimeService {

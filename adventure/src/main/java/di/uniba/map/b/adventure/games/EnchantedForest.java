@@ -20,6 +20,8 @@ import di.uniba.map.b.adventure.type.Room;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 
 /**
@@ -206,11 +208,17 @@ public class EnchantedForest extends GameDescription {
         boolean check(String itemName);
     }
 
+    /**
+     *
+     * @param p
+     * @param a1
+     */
+    @Override
     public void nextMove(ParserOutput p, JTextArea a1) {
         if (p.getCommand() == null) {
             a1.append("\n" + "Non ho capito cosa devo fare! Prova con un altro comando".trim());
         } else {
-//move
+            //move
             boolean noroom = false;
             boolean move = false;
             boolean visible = true;
@@ -406,10 +414,12 @@ public class EnchantedForest extends GameDescription {
                     } else {
                         a1.append("\n" + "Non puoi usare questo oggetto!");
                     }
-                } catch (Exception NullPointerException) {
+                } catch (NullPointerException n) {
                     if (p.getInvObject() == null) {
                         a1.append("\n" + "Non puoi attaccare con quest'oggetto!");
                     }
+                } catch (SQLException ex) {
+                    Logger.getLogger(EnchantedForest.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (p.getCommand().getType() == CommandType.GIVE) {
                 try {

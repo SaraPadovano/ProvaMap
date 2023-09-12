@@ -14,13 +14,13 @@ import java.io.IOException;
  * @author g.navolio
  */
 public class LoadFile {
-    static final String dataObject = "oggettidata";
-    static final String dataRoomDesc = "stanzedescdata";
-    static final String dataRoomLook = "stanzelookdata";
-    static final String dataMonster = "mostridata";
+    private static final String DATA_OBJECT = "oggettidata";
+    private static final String DATA_ROOM_DESC = "stanzedescdata";
+    private static final String DATA_ROOM_LOOK = "stanzelookdata";
+    private static final String DATA_MONSTER = "mostridata";
     
     public static String readObjectFile(int idInput) throws IOException {
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + dataObject)));
+        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + DATA_OBJECT)));
         int idobj;
         String descobj;
         try {
@@ -40,7 +40,7 @@ public class LoadFile {
     }
     
     public static String readRoomDescFile(int idInput) throws IOException {
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + dataRoomDesc)));
+        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + DATA_ROOM_DESC)));
         int idRoom;
         String descRoom;
         try {
@@ -60,7 +60,7 @@ public class LoadFile {
     }
     
     public static String readRoomLookFile(int idInput) throws IOException {
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + dataRoomLook)));
+        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + DATA_ROOM_LOOK)));
         int idRoom;
         String lookRoom;
         try {
@@ -80,7 +80,7 @@ public class LoadFile {
     }
     
     public static String readMonsterFile(int idInput) throws IOException {
-        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + dataMonster)));
+        DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream("target/generated-sources/" + DATA_MONSTER)));
         int idMon;
         String descMon;
         try {

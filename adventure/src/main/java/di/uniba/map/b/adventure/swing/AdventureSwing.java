@@ -36,8 +36,8 @@ public final class AdventureSwing extends javax.swing.JFrame {
         jTextArea1.setIgnoreRepaint(false);
         jTextArea1.setOpaque(true);
         jComboBox1.setEditable(false);
-           sfondo=cCOLORI[9];
-           jTextArea1.setBackground(sfondo);
+        sfondo=cCOLORI[9];
+        jTextArea1.setBackground(sfondo);
         initConnectionEngine();
     }
     
@@ -75,7 +75,6 @@ public final class AdventureSwing extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setName("frame2"); // NOI18N
         setPreferredSize(new java.awt.Dimension(400, 600));
 
         jScrollPane1.setPreferredSize(new java.awt.Dimension(214, 86));

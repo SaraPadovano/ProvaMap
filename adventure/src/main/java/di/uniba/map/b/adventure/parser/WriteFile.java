@@ -15,9 +15,9 @@ import java.io.IOException;
  */
 public class WriteFile {
 
-    static final String dataObject = "oggettidata";
-    static final int[] idObj = {1, 2, 3, 4, 5, 6, 7};
-    static final String[] descObj = {
+    private static final String DATA_OBJECT = "oggettidata";
+    private static final int[] ID_OBJ = {1, 2, 3, 4, 5, 6, 7};
+    private static final String[] DESC_OBJ = {
         "La spada donata dall'aiutante era un'opera d'arte incredibile, che incantava chiunque posasse gli occhi su di essa. Lunga e affilata, emanava un'aura di potere e maestosità."
         + "La lama era realizzata in acciaio lucido e rifinita con cura, riflettendo la luce con una brillantezza accecante. La sua forma sinuosa era adornata da motivi intricati e intagli dettagliati lungo tutto il filo, raffiguranti simboli misteriosi e immagini leggendarie.",
         "La fiala di veleno per uccidere un'antica creatura era un oggetto oscuro e inquietante, carico di un potere mortale. La sua piccola e delicata forma contenitore nascondeva un liquido nero come l'ebano, denso e viscoso."
@@ -33,9 +33,9 @@ public class WriteFile {
         + "Ha una forma piccola, che la rende tascabile. E' forse l'oggetto più adorabile che tu abbia mai visto. La sua utilità è ancora sconosciuta."
     };
 
-    static final String dataRoomDesc = "stanzedescdata";
-    static final int[] idRoom = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
-    static final String[] descRoom = {
+    private static final String DATA_ROOM_DESC = "stanzedescdata";
+    private static final int[] ID_ROOM = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+    private static final String[] DESC_ROOM = {
         "Ti trovi all'entrata del bosco.\n"
         + "Questo bosco era pieno di alberi e di altissime piante con delle bellissime e grandi foglie e fiori che emanavano un profumo così dolce"
         + " e intenso e in sottofondo il rumore dell'acqua che scorreva.\nDavanti a te c'è un sentiero che si inoltra al suo interno e ti senti osservato."
@@ -98,7 +98,7 @@ public class WriteFile {
         + "Le gemme e i diamanti riflettono la luce, creando riflessi sfavillanti che danzano sulle pareti.\n\n",
         "Dopo aver superato finalmente la Driade, ti si prospetta davanti un portale immenso e oscuro.\n"
         + "Speri che ti possa ricondurre a casa ma ne dubiti vista l'atmosfera agghiacciante che lo circonda. A dar conferma ai tuoi pensieri compare all'improvviso"
-        + "il \"tuo aiutante\" che ti dice:\"Congratulazioni avventuriero, sei risucito ad arrivare al boss finale di questo mondo. Se riuscirai a sconfiggerlo potrai finalmente tornare a casa.\n+"
+        + "il \"tuo aiutante\" che ti dice:\"Congratulazioni avventuriero, sei risucito ad arrivare al boss finale di questo mondo. Se riuscirai a sconfiggerlo potrai finalmente tornare a casa.\n"
         + "Ma attenzione! Questo è un nemico molto potente, più di tutti quelli che hai dovuto affrontare finora.\n Spero tu possa farcela. In ogni caso io ti saluto, è stato bello aiutarti nel tuo viaggio in questo mondo\""
         + "Così dicendo l'aiutante scompare. Adesso, con un impeto di coraggio e disperazione, decidi di attraversare il portale. Ti ritrovi immediatamente in un mondo completamente diverso da quello osservato finora.\n"
         + "Ti ritrovi nell'Under Dark.\n Un posto dove la luce del sole non batte mai e le cui uniche forme di vita sembrano essere delle piccole gocce d'acqua che battono sulla fredda e dura pietra.\n"
@@ -111,8 +111,8 @@ public class WriteFile {
         + "Sei un po' incerto ma alla fine decidi di accettare. La vostra sfida ha inizio...\n\n"
     };
 
-    static final String dataRoomLook = "stanzelookdata";
-    static final String[] lookRoom = {
+    private static final String DATA_ROOM_LOOK = "stanzelookdata";
+    private static final String[] LOOK_ROOM = {
         "",
         "Osservando noti che il topo mannaro sta mangiando un braccio umano. Non è il tuo, ma è comunque disgustoso.\n"
         + "L'odore di sangue pervade per tutta la stanza."
@@ -151,9 +151,9 @@ public class WriteFile {
         + "Di cos'altro si nasconda in questo mondo sotterraneo tetro e silenzioso nessuno lo sa, o meglio nessuno è tornato abbastanza sano o vivo per raccontarlo...\n\n"
     };
 
-    static final String dataMonster = "mostridata";
-    static final int[] idMon = {1, 2, 3, 4, 5, 6, 7, 8};
-    static final String[] descMon = {
+    private static final String DATA_MONSTER = "mostridata";
+    private static final int[] ID_MON = {1, 2, 3, 4, 5, 6, 7, 8};
+    private static final String[] DESC_MON = {
         "I topi mannari sono scaltri licantropi dall'indole avida e subdola. In forma umana sono snelli e nervosi, hanno i capelli radi e gli occhi sfuggenti.\n"
         + "Solitamente usano armi leggere e prediligono le imboscate piuttosto che muoversi in branco. Usa la sua forza principalmente per muoversi furtivamente e per scappare.\nI topi mannari, in forma ibrida o umanoide,"
         + "sono esteticamente caratterizzati dal loro spirito licantropo, ossia hanno fattezze molto simili ai topi. Gli occhi sono di un rosso scarlatto, privi di qualsiasi cenno di ragione. I denti soono molto"
@@ -192,39 +192,39 @@ public class WriteFile {
 
     public static void writeObjFile() throws IOException {
 
-        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + dataObject)));
-        for (int i = 0; i < idObj.length; i++) {
-            out.writeInt(idObj[i]);
-            out.writeUTF(descObj[i]);
+        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + DATA_OBJECT)));
+        for (int i = 0; i < ID_OBJ.length; i++) {
+            out.writeInt(ID_OBJ[i]);
+            out.writeUTF(DESC_OBJ[i]);
         }
 
         out.close();
     }
 
     public static void writeRoomDescFile() throws IOException {
-        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + dataRoomDesc)));
-        for (int i = 0; i < idRoom.length; i++) {
-            out.writeInt(idRoom[i]);
-            out.writeUTF(descRoom[i]);
+        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + DATA_ROOM_DESC)));
+        for (int i = 0; i < ID_ROOM.length; i++) {
+            out.writeInt(ID_ROOM[i]);
+            out.writeUTF(DESC_ROOM[i]);
         }
         out.close();
     }
     
     public static void writeRoomLookFile() throws IOException {
-        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + dataRoomLook)));
-        for (int i = 0; i < idRoom.length; i++) {
-            out.writeInt(idRoom[i]);
-            out.writeUTF(lookRoom[i]);
+        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + DATA_ROOM_LOOK)));
+        for (int i = 0; i < ID_ROOM.length; i++) {
+            out.writeInt(ID_ROOM[i]);
+            out.writeUTF(LOOK_ROOM[i]);
         }
         out.close();
     }
 
     
     public static void writeMonsterFile() throws IOException {
-        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + dataMonster)));
-        for (int i = 0; i < idMon.length; i++) {
-            out.writeInt(idMon[i]);
-            out.writeUTF(descMon[i]);
+        DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream("target/generated-sources/" + DATA_MONSTER)));
+        for (int i = 0; i < ID_MON.length; i++) {
+            out.writeInt(ID_MON[i]);
+            out.writeUTF(DESC_MON[i]);
         }
         out.close();
 

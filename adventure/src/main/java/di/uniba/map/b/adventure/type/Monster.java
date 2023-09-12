@@ -21,7 +21,7 @@ public class Monster {
 
     private boolean dropSomething = false;
 
-    private AdvObject dropObject;
+    private final AdvObject dropObject;
 
     public Monster(int id, AdvObject dropObject, String name, String descr) {
         

@@ -29,12 +29,12 @@ public class Start extends JFrame {
      */
     public Start() {
         initComponents();
-       fr = new JFrame();
+        fr = new JFrame();
         fr.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         panel = new JPanel();
        
-            image=new ImageIcon("./resources/forest.jpg");
-            displayField = new JLabel(image);
+        image=new ImageIcon("./resources/forest.jpg");
+        displayField = new JLabel(image);
             
         panel.add(displayField);
         fr.add(start);
@@ -163,10 +163,8 @@ public class Start extends JFrame {
         }
         //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Start start = new Start();
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            Start start1 = new Start();
         });
     }
 
